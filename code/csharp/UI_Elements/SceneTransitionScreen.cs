@@ -7,6 +7,7 @@ public partial class SceneTransitionScreen : CanvasLayer
 	public override void _Ready()
 	{
 		base._Ready();
+		animationPlayer.Play("RESET");
 		endAnimationName = null;
 	}
 
@@ -14,6 +15,7 @@ public partial class SceneTransitionScreen : CanvasLayer
 	{
 		None = 0,
 		FadeToBlack,
+		WipeToRight,
 		//...
 	}
 
@@ -24,11 +26,11 @@ public partial class SceneTransitionScreen : CanvasLayer
 
 	private (StringName beginAnimation, StringName endAnimation) GetTransitionAnimationNames(TransitionKind kind)
 	{
-		
 		return kind switch
 		{
 			TransitionKind.None => (new("RESET"), new("RESET")),
 			TransitionKind.FadeToBlack => (new("fade_black_begin"), new("fade_black_end")),
+			TransitionKind.WipeToRight => (new("wipe_right_begin"), new("wipe_right_end")),
 			_ => throw new ArgumentException($"{kind} is not a valid screen transition kind."),
 		};
 	}

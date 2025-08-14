@@ -21,7 +21,7 @@ public partial class MainMenuTemp : Control
 		if(scene is not null)
 		{
 			GetTree().CreateTimer(0.25).Timeout += () => {
-				SceneManager.Instance.SwitchScene(scene, transitionKind: SceneTransitionScreen.TransitionKind.FadeToBlack);
+				SceneManager.Instance.SwitchScene(scene, transitionKind: SceneTransitionScreen.TransitionKind.WipeToRight);
 			};
 		}
 	}

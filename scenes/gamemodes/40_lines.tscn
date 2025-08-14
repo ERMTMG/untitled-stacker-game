@@ -1,21 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://t8c6y583o1ee"]
+[gd_scene load_steps=7 format=3 uid="uid://t8c6y583o1ee"]
 
 [ext_resource type="PackedScene" uid="uid://db4iof4u878yt" path="res://scenes/game.tscn" id="1_d6wwj"]
 [ext_resource type="Script" uid="uid://44fyvrr3c043" path="res://code/csharp/SceneClasses/GameScene40Lines.cs" id="2_twevw"]
 [ext_resource type="Texture2D" uid="uid://fl2v6rqeim03" path="res://assets/graphics/gui/backgrounds/background_race.png" id="3_twevw"]
-[ext_resource type="Script" uid="uid://ud8gmo48g552" path="res://code/csharp/PieceGenerators/BagPieceGenerator.cs" id="4_m7xhf"]
+[ext_resource type="Resource" uid="uid://cv0pf6gr8ssud" path="res://data/resources/default_bag_piece_generator.tres" id="4_m7xhf"]
 [ext_resource type="Script" uid="uid://cc47ivv4r3u7a" path="res://code/csharp/BoardSettings.cs" id="5_7tvig"]
-
-[sub_resource type="Resource" id="Resource_x1rav"]
-script = ExtResource("4_m7xhf")
-availablePieces = PackedStringArray("T5", "I5", "S5", "Z5", "L5", "J5", "P", "Q", "N", "H", "R", "Y", "E", "F", "U", "V", "W", "X")
 
 [sub_resource type="Resource" id="Resource_o5vu5"]
 script = ExtResource("5_7tvig")
 DasSeconds = 0.133333
 ArrSeconds = 1e-08
 SoftDropFactor = 40
-Generator = SubResource("Resource_x1rav")
+Generator = ExtResource("4_m7xhf")
 BoardWidth = 10
 BoardHeight = 20
 OverBoardHeight = 20

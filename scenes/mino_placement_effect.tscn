@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3 uid="uid://ywvurjbsmr0e"]
+
+[ext_resource type="Texture2D" uid="uid://bqqntjv7hhoof" path="res://assets/graphics/board/mino_placement_effect_hires.png" id="1_2r6pn"]
+[ext_resource type="Script" uid="uid://cmtk5clnmbfah" path="res://code/csharp/SceneClasses/MinoPlacementEffect.cs" id="2_ls4yv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ls4yv"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv8gi"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20dg4"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s04o"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1wow"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcnec"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8m2a"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 768, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51d5n"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 896, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ljqg"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 1024, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtws1"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 1152, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tiqrx"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 1280, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5ywg"]
+atlas = ExtResource("1_2r6pn")
+region = Rect2(0, 1408, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r8ge1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ls4yv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv8gi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20dg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4s04o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1wow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcnec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8m2a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51d5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ljqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtws1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tiqrx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5ywg")
+}],
+"loop": false,
+"name": &"default",
+"speed": 60.0
+}]
+
+[node name="minoEffect" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_r8ge1")
+centered = false
+script = ExtResource("2_ls4yv")

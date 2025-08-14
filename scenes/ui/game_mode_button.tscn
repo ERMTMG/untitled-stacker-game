@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://dyhhf3pv37eu7"]
+
+[ext_resource type="Script" uid="uid://ba2hc7dyxroci" path="res://code/csharp/UI_Elements/GameModeButton.cs" id="1_3v347"]
+[ext_resource type="Texture2D" uid="uid://ctikkqbfoc5na" path="res://assets/graphics/gui/interactables/button_xl.png" id="2_e72ho"]
+[ext_resource type="Shader" uid="uid://cf01aem5gaybs" path="res://assets/shaders/shine_glint.gdshader" id="3_e72ho"]
+[ext_resource type="Texture2D" uid="uid://bvg7whjs3kpix" path="res://assets/graphics/gui/frames/iconframe_filled.png" id="3_tl6oe"]
+[ext_resource type="Texture2D" uid="uid://blthrpab31a5m" path="res://assets/graphics/gui/level_icons/sprint.png" id="4_s3rrc"]
+[ext_resource type="FontFile" uid="uid://d0silwi1ecc65" path="res://assets/fonts/BOLDEAN.ttf" id="5_u6oht"]
+[ext_resource type="FontFile" uid="uid://bvsayi5u23m3t" path="res://assets/fonts/Gelline.otf" id="6_6outi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3v347"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e72ho"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tl6oe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s3rrc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tl6oe"]
+resource_local_to_scene = true
+shader = ExtResource("3_e72ho")
+shader_parameter/shine_color = Color(0.564706, 1, 1, 0.756863)
+shader_parameter/shine_angle = 75.5
+shader_parameter/shine_speed = 1.81
+shader_parameter/shine_reverse = false
+shader_parameter/Line_Width = 0.09
+shader_parameter/Line_Smoothness = 0.1
+shader_parameter/Brightness = 3.0
+shader_parameter/Distortion = 1.674
+shader_parameter/LensStrength = 0.0
+shader_parameter/time = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_fg7j7"]
+font = ExtResource("5_u6oht")
+font_size = 60
+
+[node name="game_mode_button" type="Button" node_paths=PackedStringArray("buttonBgSprite", "iconSprite", "iconFrame", "titleLabel", "descLabel")]
+z_index = 16
+offset_right = 383.0
+offset_bottom = 60.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3v347")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_e72ho")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tl6oe")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_s3rrc")
+flat = true
+expand_icon = true
+script = ExtResource("1_3v347")
+buttonBgSprite = NodePath("button_body_sprite")
+iconSprite = NodePath("button_icon_frame/button_icon")
+iconFrame = NodePath("button_icon_frame")
+titleLabel = NodePath("game_mode_title")
+descLabel = NodePath("game_mode_description")
+
+[node name="button_body_sprite" type="Sprite2D" parent="."]
+z_as_relative = false
+texture = ExtResource("2_e72ho")
+centered = false
+
+[node name="button_icon_frame" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_tl6oe")
+position = Vector2(12, 30)
+scale = Vector2(0.61, 0.61)
+texture = ExtResource("3_tl6oe")
+
+[node name="button_icon" type="Sprite2D" parent="button_icon_frame"]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("4_s3rrc")
+
+[node name="game_mode_title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 4.0
+offset_right = 690.0
+offset_bottom = 71.0
+scale = Vector2(0.5, 0.5)
+text = "NAME GOES HERE"
+label_settings = SubResource("LabelSettings_fg7j7")
+
+[node name="game_mode_description" type="RichTextLabel" parent="."]
+z_index = 1
+z_as_relative = false
+layout_mode = 0
+offset_left = 56.0
+offset_top = 30.0
+offset_right = 682.0
+offset_bottom = 94.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("6_6outi")
+theme_override_fonts/bold_font = ExtResource("6_6outi")
+theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/bold_font_size = 28
+bbcode_enabled = true
+text = "Lorem ipsum [b]dolor sit amet[/b], consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore [b]magna aliqua[/b]."

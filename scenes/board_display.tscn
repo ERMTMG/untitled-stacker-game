@@ -1,0 +1,428 @@
+[gd_scene load_steps=29 format=3 uid="uid://k8hmenne3tsr"]
+
+[ext_resource type="Script" uid="uid://c1a8xbc0v5k0q" path="res://code/csharp/BoardDisplay.cs" id="1_wwucy"]
+[ext_resource type="PackedScene" uid="uid://chccrguw8w7rs" path="res://scenes/game_board.tscn" id="3_wnkqa"]
+[ext_resource type="PackedScene" uid="uid://bw23b0irakutw" path="res://scenes/piece_preview_cell.tscn" id="3_wwucy"]
+[ext_resource type="Script" uid="uid://d01rwbqesrjec" path="res://code/csharp/BoardDrawingComponent.cs" id="3_yyvqw"]
+[ext_resource type="Texture2D" uid="uid://sdnppk4nswlj" path="res://assets/graphics/board/block.png" id="4_wnkqa"]
+[ext_resource type="FontFile" uid="uid://bhdfnymn3rv08" path="res://assets/fonts/SF Atarian System.ttf" id="6_6yjih"]
+[ext_resource type="FontFile" uid="uid://d0silwi1ecc65" path="res://assets/fonts/BOLDEAN.ttf" id="7_2e3ap"]
+[ext_resource type="FontFile" uid="uid://bvifqehnn7n7f" path="res://assets/fonts/SF Atarian System Extended.ttf" id="8_1jnfq"]
+[ext_resource type="FontFile" uid="uid://cvkuhrjb4r166" path="res://assets/fonts/SF Atarian System Extended Italic.ttf" id="9_rxaik"]
+[ext_resource type="FontFile" uid="uid://bugre5lt21s0w" path="res://assets/fonts/SF Atarian System Extended Bold Italic.ttf" id="10_mkkmm"]
+[ext_resource type="FontFile" uid="uid://wl2xlh2i2pdm" path="res://assets/fonts/SF Atarian System Extended Bold.ttf" id="11_lf7be"]
+
+[sub_resource type="Shader" id="Shader_1jnfq"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxaik"]
+resource_local_to_scene = true
+shader = SubResource("Shader_1jnfq")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="Shader" id="Shader_mkkmm"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lf7be"]
+resource_local_to_scene = true
+shader = SubResource("Shader_mkkmm")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="Shader" id="Shader_0wino"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0ssp"]
+resource_local_to_scene = true
+shader = SubResource("Shader_0wino")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="Shader" id="Shader_q5djw"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhyla"]
+resource_local_to_scene = true
+shader = SubResource("Shader_q5djw")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="Shader" id="Shader_o1x0d"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gangk"]
+resource_local_to_scene = true
+shader = SubResource("Shader_o1x0d")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="Shader" id="Shader_8na78"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrox6"]
+resource_local_to_scene = true
+shader = SubResource("Shader_8na78")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_o1x0d"]
+font = ExtResource("6_6yjih")
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_8na78"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("countDownLabel:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [60]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("countDownLabel:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["GO!"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("countDownLabel:label_settings:font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.266667, 0.913725, 0.752941, 0.733333)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("countDownLabel:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gangk"]
+resource_name = "starting_countdown"
+length = 3.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("countDownLabel:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [50, 60, 67, 75]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("countDownLabel:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1", "GO!"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("countDownLabel:label_settings:font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1, 1.96667, 2, 2.96667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.266667, 0.913725, 0.752941, 0.733333), Color(0.266667, 0.913725, 0.752941, 0.733333), Color(0.266667, 0.913725, 0.854902, 0.819608), Color(0.266667, 0.913725, 0.752941, 0.733333), Color(0.266667, 0.913725, 0.905882, 0.882353), Color(0.266667, 0.913725, 0.752941, 0.733333), Color(0.266667, 0.913725, 0.905882, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("board")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UnPause"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("countDownLabel:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3, 3.23333),
+"transitions": PackedFloat32Array(1, 0.517632, 19.0273),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrox6"]
+_data = {
+&"RESET": SubResource("Animation_8na78"),
+&"starting_countdown": SubResource("Animation_gangk")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_if1dr"]
+font = ExtResource("7_2e3ap")
+font_size = 60
+font_color = Color(0.266667, 0.913725, 0.752941, 0.733333)
+outline_size = 6
+outline_color = Color(0, 0.741176, 0.772549, 1)
+
+[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "animationPlayer", "postGameLabel")]
+script = ExtResource("1_wwucy")
+board = NodePath("board")
+boardDrawingComponent = NodePath("boardDrawingComponent")
+nextPiecePreviews = [NodePath("nextPiecePreviews/nextPiecePreview0"), NodePath("nextPiecePreviews/nextPiecePreview1"), NodePath("nextPiecePreviews/nextPiecePreview2"), NodePath("nextPiecePreviews/nextPiecePreview3"), NodePath("nextPiecePreviews/nextPiecePreview4")]
+heldPiecePreview = NodePath("heldPiecePreview")
+infoLabel = NodePath("infoLabel")
+countDownLabel = NodePath("countDownLabel")
+animationPlayer = NodePath("AnimationPlayer")
+postGameLabel = NodePath("postGameLabel")
+
+[node name="board" parent="." instance=ExtResource("3_wnkqa")]
+
+[node name="boardDrawingComponent" type="Node2D" parent="." node_paths=PackedStringArray("board")]
+script = ExtResource("3_yyvqw")
+board = NodePath("../board")
+TileSize = 23
+BlockTexture = ExtResource("4_wnkqa")
+
+[node name="heldPiecePreview" parent="." instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_rxaik")
+position = Vector2(-64, 40)
+
+[node name="nextPiecePreviews" type="Node2D" parent="."]
+
+[node name="nextPiecePreview0" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_lf7be")
+position = Vector2(297, 41)
+
+[node name="nextPiecePreview1" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_l0ssp")
+position = Vector2(293, 118)
+
+[node name="nextPiecePreview2" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_dhyla")
+position = Vector2(293, 196)
+
+[node name="nextPiecePreview3" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_gangk")
+position = Vector2(292, 271)
+
+[node name="nextPiecePreview4" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
+material = SubResource("ShaderMaterial_mrox6")
+position = Vector2(292, 348)
+
+[node name="infoLabel" type="Label" parent="."]
+offset_left = -114.0
+offset_top = 282.0
+offset_right = -2.805
+offset_bottom = 324.0
+text = "pieces: 0
+
+lines: 0"
+label_settings = SubResource("LabelSettings_o1x0d")
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mrox6")
+}
+
+[node name="countDownLabel" type="Label" parent="."]
+offset_left = -130.0
+offset_right = 359.0
+offset_bottom = 75.0
+text = "GO!"
+label_settings = SubResource("LabelSettings_if1dr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="postGameLabel" type="RichTextLabel" parent="."]
+offset_right = 235.0
+offset_bottom = 40.0
+theme_override_constants/outline_size = 8
+theme_override_constants/line_separation = 5
+theme_override_fonts/normal_font = ExtResource("8_1jnfq")
+theme_override_fonts/italics_font = ExtResource("9_rxaik")
+theme_override_fonts/bold_italics_font = ExtResource("10_mkkmm")
+theme_override_fonts/bold_font = ExtResource("11_lf7be")
+theme_override_font_sizes/bold_italics_font_size = 19
+theme_override_font_sizes/italics_font_size = 19
+theme_override_font_sizes/normal_font_size = 19
+theme_override_font_sizes/bold_font_size = 19
+bbcode_enabled = true
+text = "[b]Total Time[/b]: 1:07.438"
+horizontal_alignment = 1
+vertical_alignment = 1

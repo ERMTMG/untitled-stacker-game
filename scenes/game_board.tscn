@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://chccrguw8w7rs"]
+
+[ext_resource type="Script" uid="uid://qqonl16emyj" path="res://code/csharp/GameBoard/GameBoard.cs" id="1_0jtfi"]
+[ext_resource type="Script" uid="uid://cc47ivv4r3u7a" path="res://code/csharp/BoardSettings.cs" id="2_0jtfi"]
+[ext_resource type="Script" uid="uid://e8tw2iadj53u" path="res://code/csharp/InputManager.cs" id="2_3wu0g"]
+[ext_resource type="Resource" uid="uid://cv0pf6gr8ssud" path="res://data/resources/default_bag_piece_generator.tres" id="2_mq2xb"]
+
+[sub_resource type="Resource" id="Resource_cmh4g"]
+script = ExtResource("2_0jtfi")
+DasSeconds = 0.133333
+ArrSeconds = 1e-08
+SoftDropFactor = 40
+Generator = ExtResource("2_mq2xb")
+BoardWidth = 10
+BoardHeight = 20
+OverBoardHeight = 20
+BeginningGravityLevel = 0.0166667
+LockDelaySeconds = 0.5
+TopOutTypesConsidered = 7
+metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
+
+[node name="board" type="Node" node_paths=PackedStringArray("input")]
+script = ExtResource("1_0jtfi")
+input = NodePath("inputManager")
+settings = SubResource("Resource_cmh4g")
+
+[node name="inputManager" type="Node" parent="."]
+script = ExtResource("2_3wu0g")

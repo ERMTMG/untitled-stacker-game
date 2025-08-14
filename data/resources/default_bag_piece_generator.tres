@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BagPieceGenerator" load_steps=2 format=3 uid="uid://cv0pf6gr8ssud"]
+
+[ext_resource type="Script" uid="uid://ud8gmo48g552" path="res://code/csharp/PieceGenerators/BagPieceGenerator.cs" id="1_iscm5"]
+
+[resource]
+script = ExtResource("1_iscm5")
+availablePieces = PackedStringArray("T", "I", "O", "S", "Z", "L", "J")
+metadata/_custom_type_script = "uid://ud8gmo48g552"

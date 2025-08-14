@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://bw23b0irakutw"]
+
+[ext_resource type="Texture2D" uid="uid://8nc2yfg4j52e" path="res://assets/graphics/board/piecePreviewCell.png" id="1_crdx3"]
+[ext_resource type="Script" uid="uid://bf7q3msnhqgei" path="res://code/csharp/PiecePreviewCell.cs" id="2_crdx3"]
+[ext_resource type="Shader" uid="uid://cryuf3cjacrtk" path="res://assets/shaders/piece_preview_cell_shader_material.gdshader" id="3_crdx3"]
+[ext_resource type="Texture2D" uid="uid://qbrw8pihc373" path="res://assets/graphics/piece_renders/tetromino/I.png" id="4_crdx3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocmg4"]
+resource_local_to_scene = true
+shader = ExtResource("3_crdx3")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.4
+
+[node name="cell" type="Sprite2D" node_paths=PackedStringArray("pieceSprite")]
+scale = Vector2(0.645, 0.645)
+texture = ExtResource("1_crdx3")
+script = ExtResource("2_crdx3")
+pieceSprite = NodePath("pieceSprite")
+
+[node name="pieceSprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ocmg4")
+texture = ExtResource("4_crdx3")

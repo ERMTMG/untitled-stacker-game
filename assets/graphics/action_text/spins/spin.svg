@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="30"
+   height="30"
+   viewBox="0 0 30 30"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="spin.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient6"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#d3d3d3;stop-opacity:1;"
+         offset="0"
+         id="stop6" />
+      <stop
+         style="stop-color:#d3d3d3;stop-opacity:0;"
+         offset="1"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6"
+       id="linearGradient7"
+       x1="6.929419"
+       y1="18.428446"
+       x2="9.4057417"
+       y2="19.56785"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(3.0715659,2.4436358)" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showguides="false"
+     inkscape:zoom="16"
+     inkscape:cx="2.25"
+     inkscape:cy="17.53125"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 5.5696128,15.566683 c 0.0291,0.218738 0.066234,0.436334 0.1113282,0.652343 0.050008,-0.07487 0.078125,-0.161491 0.078125,-0.259765 0,-0.162935 -0.073827,-0.290387 -0.1894532,-0.392578 z"
+     style="fill:#d3d3d3"
+     id="path6" />
+  <path
+     d="m 14.637972,5.304964 c -0.249347,-0.00278 -0.501377,0.00486 -0.755858,0.023437 -1.34846,0.1006566 -2.65691,0.5038728 -3.828126,1.179688 -1.8638253,1.077769 -3.187741,2.7040042 -3.8984377,4.736328 0.6399769,0.339314 1.0076062,0.967329 1.0800781,1.867188 h -0.013672 c 8.247e-4,0.01001 0.00316,0.01923 0.00391,0.0293 l 0.00977,0.267579 -1.5996093,-0.0078 c -0.026244,0.189371 -0.046436,0.227254 -0.060555,0.417952 0.8387517,0.237667 1.6064409,0.81153 1.6953125,1.703125 0.00652,0.06545 0.013672,0.436985 0.013672,0.505859 5.03e-5,0.0019 -4.4e-5,0.0039 0,0.0059 0.014803,0.653765 -0.417806,1.313994 -1.125,1.697265 0.1667617,0.440877 0.3679017,0.662895 0.6015625,1.072266 0.6131522,1.062011 1.4288612,1.976359 2.3867187,2.705078 l 1.1035162,-1.59375 C 9.5443077,19.426334 8.9437197,18.795787 8.4934409,18.008089 5.3734503,12.604105 10.342333,5.9271249 16.366489,7.5412921 c 6.024153,1.6141673 7.082819,9.7072749 1.6875,12.8222659 l -1.5,-2.597657 -1.462892,5.464844 0.04883,0.08594 5.414062,1.378906 -1.5,-2.59961 c 1.872504,-1.087982 2.991089,-2.814674 3.693359,-4.863281 V 11.37137 C 21.499984,7.7529359 18.378194,5.346645 14.637972,5.304964 Z"
+     style="fill:#d3d3d3"
+     id="path3" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.48249px;font-family:Onlygraphic;-inkscape-font-specification:Onlygraphic;text-align:center;letter-spacing:2.56027px;text-anchor:middle;mix-blend-mode:normal;fill:#f9f9f9;stroke-width:0.142237"
+     x="15.199136"
+     y="17.787977"
+     id="text3"><tspan
+       sodipodi:role="line"
+       id="tspan3"
+       x="16.479271"
+       y="17.787977"
+       style="font-size:9.48249px;text-align:center;letter-spacing:2.56027px;text-anchor:middle;stroke-width:0.142237">SPIN</tspan></text>
+  <path
+     d="m 10.241957,19.905042 -1.1035163,1.59375 c 0.9089483,0.691509 1.9457533,1.215969 3.0644533,1.537109 l 0.548828,-2.048828 C 11.83151,20.768382 10.978921,20.413769 10.241957,19.905042 Z"
+     style="opacity:1;fill:url(#linearGradient7);stroke-width:1.042"
+     id="path5" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.56268px;font-family:Onlygraphic;-inkscape-font-specification:Onlygraphic;text-align:center;letter-spacing:0px;text-anchor:middle;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.160406;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     x="24.107718"
+     y="28.441895"
+     id="text12"><tspan
+       sodipodi:role="line"
+       id="tspan12"
+       x="24.107718"
+       y="28.441895"
+       style="stroke-width:0.160406">Mini</tspan></text>
+</svg>

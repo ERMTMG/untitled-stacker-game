@@ -38,8 +38,25 @@ public partial class SceneManager : Node
 		}
 		SceneTransitionScreen transition = CreateTransition(transitionKind);
 		await ToSignal(transition, TransitionMidpointSignalName);
+		// Step 1: create the new scene
 		Node newCurrentScene = toScene.Instantiate();
 		GetTree().Root.AddChild(newCurrentScene);
+
+		// Step 2: transfer data between scenes if there is any
+		SceneData data = null;
+		if(fromScene is ISceneDataEmitter sceneDataEmitter)
+		{
+			data = sceneDataEmitter.GetData();
+		}
+		if(newCurrentScene is ISceneDataReceiver sceneDataReceiver)
+		{
+			if(data is not null)
+			{	
+				sceneDataReceiver.InitData(data);
+			}
+		}
+
+		// Step 3: free the old scene and swith the current scene
 		if(fromScene != GetTree().Root)
 		{
 			fromScene.QueueFree();

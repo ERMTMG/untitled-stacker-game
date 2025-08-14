@@ -1,0 +1,5 @@
+{
+    "csharp.format.enable": false,
+    "razor.format.enable": false,
+    "godotTools.editorPath.godot4": "c:\\Users\\Edu Jr\\Desktop\\Programas\\Godot_v4.4.1-stable_mono_win64.exe"
+}

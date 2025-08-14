@@ -6,7 +6,7 @@ using GC = Godot.Collections;
 
 namespace USG;
 
-public partial class MainMenuTemp : Control
+public partial class MainMenuTemp : Control, ISceneDataEmitter
 {
 	[Export] public GC.Array<GameModeButton> buttons;
 	
@@ -35,4 +35,8 @@ public partial class MainMenuTemp : Control
 		}
 	}
 
+	public SceneData GetData()
+	{
+		return new TestMessageSceneData("Hello World!");
+	}
 }

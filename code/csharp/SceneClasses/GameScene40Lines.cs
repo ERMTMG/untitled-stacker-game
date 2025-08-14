@@ -3,7 +3,7 @@ using System;
 
 namespace USG;
 
-public partial class GameScene40Lines : GameScene
+public partial class GameScene40Lines : GameScene, ISceneDataReceiver
 {
 	private int totalLinesCleared;
 	[Export] private int targetLines = 40;
@@ -34,6 +34,16 @@ public partial class GameScene40Lines : GameScene
 			TimeSpan time = TimeSpan.FromSeconds((double)board.BoardTimeSeconds);
 			string message = $"Total time: {time.Minutes}:{time.Seconds:D2}.{time.Milliseconds:D3}";
 			board.GameOverWin(message);
+		}
+	}
+
+	public void InitData(SceneData data)
+	{
+		if(data is TestMessageSceneData messageData)
+		{
+			GD.Print(messageData.Message);
+		} else {
+			GD.PushWarning($"Scene data type {data.GetType()} not supported");
 		}
 	}
 }

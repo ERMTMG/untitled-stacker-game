@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckrc2rnc2j6ku"]
+
+[ext_resource type="Texture2D" uid="uid://c02b0x42ap6ls" path="res://assets/graphics/action_text/line_clears/single.png" id="1_o42lr"]
+[ext_resource type="Script" uid="uid://d28pa7xieqd8w" path="res://code/csharp/UI_Elements/LineClearNotification.cs" id="2_mumdq"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_o42lr")
+script = ExtResource("2_mumdq")

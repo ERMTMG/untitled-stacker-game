@@ -2,10 +2,12 @@ using Godot;
 using System;
 using System.Linq;
 using System.Text;
+using USG.UI;
 
 namespace USG;
 
 using GC = Godot.Collections;
+using LineClearNotif = UI.LineClearNotification;
 
 public partial class BoardDisplay : CanvasGroup
 {
@@ -19,6 +21,7 @@ public partial class BoardDisplay : CanvasGroup
 	}
 
 	static readonly PackedScene MinoPlacementEffectScene = GD.Load<PackedScene>("res://scenes/mino_placement_effect.tscn");
+	static readonly PackedScene LineClearNotificationScene = GD.Load<PackedScene>("res://scenes/ui/line_clear_notification.tscn");
 
 	[Export] private GameBoard board;
 	[Export] private BoardDrawingComponent boardDrawingComponent;
@@ -264,8 +267,19 @@ public partial class BoardDisplay : CanvasGroup
 		BoardToppedOut?.Invoke(type);
 	}
 
-	private void OnBoardLineCleared(int linesCleared, string pieceID)
+	private void OnBoardLineCleared(int linesCleared, string pieceID, GameBoard.PiecePlacementInformation info)
 	{
+		LineClearNotif lineClearNotif = LineClearNotificationScene.Instantiate<LineClearNotif>();
+		this.AddChild(lineClearNotif);
+		lineClearNotif.Position = 
+			BoardCenterOffset 
+			- new Vector2(boardDrawingComponent.BoardEffectiveWidth / 2, 0)
+			- heldPiecePreview.Scale*heldPiecePreview.Texture.GetSize() / 2
+			+ 40 * Vector2.Up + 30 * Vector2.Left
+			+ 20f * GD.Randf() * Vector2.FromAngle(GD.Randf() * float.Tau);
+		lineClearNotif.Scale = (float)GD.Randfn(0.4, 0.05) * Vector2.One;
+		lineClearNotif.SetLineClearTexture(linesCleared);
+		lineClearNotif.EnableFastDecayAnimation();
 		this.LineCleared?.Invoke(linesCleared, pieceID);
 	}
 

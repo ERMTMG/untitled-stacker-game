@@ -35,6 +35,13 @@ public partial class GameBoard : Node
 	private bool isSoftDropping;
 	private TopOutType topOutTypesConsidered;
 
+	public record PiecePlacementInformation
+	(
+		CellPosition Position,
+		RotationState RotationState,
+		SpinType Spin = SpinType.NoSpin
+	);
+
 	public enum TopOutType
 	{
 		BlockOut         = 1 << 0,
@@ -359,7 +366,7 @@ public partial class GameBoard : Node
 		}
 	}
 
-	private void ClearFullRows()
+	private void ClearFullRows(PiecePlacementInformation pieceInfo = null)
 	{
 		int totalRowsCleared = 0;
 		for(int i = 0; i < BoardTrueHeight; i++)
@@ -374,7 +381,8 @@ public partial class GameBoard : Node
 		{
 			LineCleared?.Invoke(
 				totalRowsCleared,
-				currentPiece.ID
+				currentPiece.ID,
+				pieceInfo
 			);
 			info.LinesCleared += totalRowsCleared;
 		}
@@ -410,7 +418,7 @@ public partial class GameBoard : Node
 
 	// TODO: delete these later
 
-	private void OnLineCleared(int linesCleared, string pieceID)
+	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation info)
 	{
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
 	}

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using USG.UI;
@@ -59,6 +60,7 @@ public partial class BoardDisplay : CanvasGroup
 	public decimal BoardTimeSeconds => board.TimePassedSeconds;
 	public int BoardLinesCleared => board.LinesCleared;
 	public int BoardPiecesPlaced => board.PiecesPlaced;
+	public List<LineClearNotif> lineClearNotifications;
 
 	BoardDisplay() {}
 
@@ -77,6 +79,7 @@ public partial class BoardDisplay : CanvasGroup
 		animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
 
 		board.Settings = this.boardSettings;
+		this.lineClearNotifications = [];
 
 		SetUpBoardElementPositions();
 	}
@@ -257,8 +260,15 @@ public partial class BoardDisplay : CanvasGroup
 		}
 	}
 
-	private void OnBoardPiecePlaced(string pieceID, CellPosition position, RotationState rotationState, SpinType spin)
+	private void OnBoardPiecePlaced(string pieceID, CellPosition position, RotationState rotationState, SpinType spin, bool clearedLines)
 	{
+		if(!clearedLines)
+		{
+			foreach(LineClearNotif notif in lineClearNotifications)
+			{
+				notif.EnableFastDecayAnimation();
+			}
+		}
 		SpawnPiecePlacementEffect(pieceID, position, rotationState);
 	}
 
@@ -278,8 +288,12 @@ public partial class BoardDisplay : CanvasGroup
 			+ 40 * Vector2.Up + 30 * Vector2.Left
 			+ 20f * GD.Randf() * Vector2.FromAngle(GD.Randf() * float.Tau);
 		lineClearNotif.Scale = (float)GD.Randfn(0.4, 0.05) * Vector2.One;
+		lineClearNotif.Rotation = (float)GD.Randfn(0, double.Pi/20);
 		lineClearNotif.SetLineClearTexture(linesCleared);
-		lineClearNotif.EnableFastDecayAnimation();
+		lineClearNotifications.Add(lineClearNotif);
+		lineClearNotif.TreeExiting += () => {
+			lineClearNotifications.Remove(lineClearNotif);
+		};
 		this.LineCleared?.Invoke(linesCleared, pieceID);
 	}
 

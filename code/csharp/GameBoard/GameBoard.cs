@@ -23,6 +23,7 @@ public partial class GameBoard : Node
 	private string heldPieceName;
 	private bool hasHeldPiece;
 	private bool isGameActive;
+	private int currentComboValue;
 
 	private Piece currentPiece;
 	private SpinType latestSpin;
@@ -138,6 +139,7 @@ public partial class GameBoard : Node
 		
 		hasHeldPiece = false;
 		isGameActive = false;
+		currentComboValue = -1;
 
 		LineCleared += this.OnLineCleared;
 		PiecePlaced += this.OnPiecePlaced;
@@ -177,13 +179,18 @@ public partial class GameBoard : Node
 	public void PlaceCurrentPiece()
 	{
 		PrintCurrentPieceInMatrix();
+		CellPosition piecePosition = new(currentPiece.RelativePosition);
+		int clearedLines = ClearFullRows(
+			new PiecePlacementInformation(piecePosition, currentPiece.Rotation, latestSpin)
+		);
 		info.PiecesPlaced++;
 		latestSpin = currentPiece.SpinState == true ? latestSpin : SpinType.NoSpin;
 		PiecePlaced?.Invoke(
 			currentPiece.ID, 
-			new CellPosition(currentPiece.RelativePosition),
+			piecePosition,
 			currentPiece.Rotation,
-			latestSpin
+			latestSpin,
+			clearedLines > 0
 		);
 	}
 
@@ -366,7 +373,7 @@ public partial class GameBoard : Node
 		}
 	}
 
-	private void ClearFullRows(PiecePlacementInformation pieceInfo = null)
+	private int ClearFullRows(PiecePlacementInformation pieceInfo = null)
 	{
 		int totalRowsCleared = 0;
 		for(int i = 0; i < BoardTrueHeight; i++)
@@ -386,7 +393,7 @@ public partial class GameBoard : Node
 			);
 			info.LinesCleared += totalRowsCleared;
 		}
-		
+		return totalRowsCleared;
 	}
 
 	public void UnPause()
@@ -423,7 +430,7 @@ public partial class GameBoard : Node
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
 	}
 
-	private void OnPiecePlaced(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin)
+	private void OnPiecePlaced(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin, bool clearedLines)
 	{
 		GD.Print($"Piece {pieceID} placed on row {piecePosition.Row}, column {piecePosition.Col}!");
 		if(spin != SpinType.NoSpin)

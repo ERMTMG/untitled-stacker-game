@@ -27,7 +27,7 @@ public partial class LineClearNotification : Sprite2D
 	const double FAST_SHRINK_SPEED = 0.05;
 
 	const double ANIMATION_SWITCHUP_LERP_SPEED = 0.20;
-	const double SLOW_ANIMATION_SPEED_DECREASE_FACTOR = 0.9985;
+	const double SLOW_ANIMATION_SPEED_DECREASE_FACTOR = 0.98;
 
 
 	public override void _Ready()

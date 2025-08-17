@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://k8hmenne3tsr"]
+[gd_scene load_steps=31 format=3 uid="uid://k8hmenne3tsr"]
 
 [ext_resource type="Script" uid="uid://c1a8xbc0v5k0q" path="res://code/csharp/BoardDisplay.cs" id="1_wwucy"]
 [ext_resource type="PackedScene" uid="uid://chccrguw8w7rs" path="res://scenes/game_board.tscn" id="3_wnkqa"]
@@ -6,7 +6,9 @@
 [ext_resource type="Script" uid="uid://d01rwbqesrjec" path="res://code/csharp/BoardDrawingComponent.cs" id="3_yyvqw"]
 [ext_resource type="Texture2D" uid="uid://sdnppk4nswlj" path="res://assets/graphics/board/block.png" id="4_wnkqa"]
 [ext_resource type="FontFile" uid="uid://bhdfnymn3rv08" path="res://assets/fonts/SF Atarian System.ttf" id="6_6yjih"]
+[ext_resource type="Texture2D" uid="uid://djc6cjlnho4sn" path="res://assets/graphics/action_text/spins/tspin.png" id="6_mkkmm"]
 [ext_resource type="FontFile" uid="uid://d0silwi1ecc65" path="res://assets/fonts/BOLDEAN.ttf" id="7_2e3ap"]
+[ext_resource type="Script" uid="uid://mi0h2ky0i20q" path="res://code/csharp/UI_Elements/SpinIndicator.cs" id="7_lf7be"]
 [ext_resource type="FontFile" uid="uid://bvifqehnn7n7f" path="res://assets/fonts/SF Atarian System Extended.ttf" id="8_1jnfq"]
 [ext_resource type="FontFile" uid="uid://cvkuhrjb4r166" path="res://assets/fonts/SF Atarian System Extended Italic.ttf" id="9_rxaik"]
 [ext_resource type="FontFile" uid="uid://bugre5lt21s0w" path="res://assets/fonts/SF Atarian System Extended Bold Italic.ttf" id="10_mkkmm"]
@@ -338,7 +340,7 @@ font_color = Color(0.266667, 0.913725, 0.752941, 0.733333)
 outline_size = 6
 outline_color = Color(0, 0.741176, 0.772549, 1)
 
-[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "animationPlayer", "postGameLabel")]
+[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "animationPlayer", "postGameLabel", "spinIndicator")]
 script = ExtResource("1_wwucy")
 board = NodePath("board")
 boardDrawingComponent = NodePath("boardDrawingComponent")
@@ -348,6 +350,7 @@ infoLabel = NodePath("infoLabel")
 countDownLabel = NodePath("countDownLabel")
 animationPlayer = NodePath("AnimationPlayer")
 postGameLabel = NodePath("postGameLabel")
+spinIndicator = NodePath("spinIndicator")
 
 [node name="board" parent="." instance=ExtResource("3_wnkqa")]
 
@@ -360,6 +363,12 @@ BlockTexture = ExtResource("4_wnkqa")
 [node name="heldPiecePreview" parent="." instance=ExtResource("3_wwucy")]
 material = SubResource("ShaderMaterial_rxaik")
 position = Vector2(-64, 40)
+
+[node name="spinIndicator" type="Sprite2D" parent="."]
+position = Vector2(-150, 106)
+scale = Vector2(0.244762, 0.244762)
+texture = ExtResource("6_mkkmm")
+script = ExtResource("7_lf7be")
 
 [node name="nextPiecePreviews" type="Node2D" parent="."]
 

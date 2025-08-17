@@ -32,6 +32,7 @@ public partial class BoardDisplay : CanvasGroup
 	[Export] private Label countDownLabel;
 	[Export] private AnimationPlayer animationPlayer;
 	[Export] private RichTextLabel postGameLabel;
+	[Export] private SpinIndicator spinIndicator;
 	[Export] private BoardSettings boardSettings;
 
 	private Stats statsShown;
@@ -72,6 +73,7 @@ public partial class BoardDisplay : CanvasGroup
 		base._Ready();
 
 		board.PiecePlaced += OnBoardPiecePlaced;
+		board.PieceSpinned += OnBoardPieceSpinned;
 		board.NextPieceSpawned += OnBoardNextPieceSpawned;
 		board.PieceHeld += OnBoardPieceHeld;
 		board.ToppedOut += OnBoardToppedOut;
@@ -127,6 +129,9 @@ public partial class BoardDisplay : CanvasGroup
 								  ) - postGameLabel.Size) / 2;
 		
 		postGameLabel.Hide();
+
+		Vector2 heldPieceLowerLeftCorner = heldPieceUpperLeftCorner + heldPiecePreview.Scale.Y * heldPiecePreview.Texture.GetHeight() * Vector2.Down;
+		spinIndicator.Position = heldPieceLowerLeftCorner + (spinIndicator.Scale.Y * spinIndicator.Texture.GetHeight() / 2)*Vector2.Down;
 	}
 
 	public void StartGameCountdown()
@@ -295,6 +300,11 @@ public partial class BoardDisplay : CanvasGroup
 			lineClearNotifications.Remove(lineClearNotif);
 		};
 		this.LineCleared?.Invoke(linesCleared, pieceID);
+	}
+
+	private void OnBoardPieceSpinned(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spinType)
+	{
+		spinIndicator.SetSpinInformation(pieceID, spinType);
 	}
 
 	public Texture2D GetTexture()

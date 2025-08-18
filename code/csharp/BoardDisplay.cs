@@ -295,6 +295,10 @@ public partial class BoardDisplay : CanvasGroup
 			}
 		}
 		SpawnPiecePlacementEffect(pieceID, position, rotationState);
+		if(spin != SpinType.NoSpin)
+		{
+			spinIndicator.SetSpinInformation(pieceID, spin);
+		}
 	}
 
 	private void OnBoardToppedOut(GameBoard.TopOutType type)
@@ -324,7 +328,7 @@ public partial class BoardDisplay : CanvasGroup
 
 	private void OnBoardPieceSpinned(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spinType)
 	{
-		spinIndicator.SetSpinInformation(pieceID, spinType);
+		
 	}
 
 	public Texture2D GetTexture()

@@ -131,7 +131,9 @@ public partial class BoardDisplay : CanvasGroup
 		postGameLabel.Hide();
 
 		Vector2 heldPieceLowerLeftCorner = heldPieceUpperLeftCorner + heldPiecePreview.Scale.Y * heldPiecePreview.Texture.GetHeight() * Vector2.Down;
-		spinIndicator.Position = heldPieceLowerLeftCorner + (spinIndicator.Scale.Y * spinIndicator.Texture.GetHeight() / 2)*Vector2.Down;
+		spinIndicator.Position = heldPieceLowerLeftCorner 
+			+ (spinIndicator.Scale.Y * spinIndicator.Texture.GetHeight() / 2)*Vector2.Down
+			+ (spinIndicator.Scale.X * spinIndicator.Texture.GetWidth() / 2)*Vector2.Left;
 	}
 
 	public void StartGameCountdown()
@@ -173,10 +175,28 @@ public partial class BoardDisplay : CanvasGroup
 		infoLabel.Text = labelText.ToString();
 	}
 
+	private void HideExcessiveLineClearNotifs()
+	{
+		const int LINE_CLEAR_NOTIF_LIMIT = 6;
+		int activeLineClearNotifs = lineClearNotifications.Count((notif) => !notif.FastDecayEnabled);
+		if(activeLineClearNotifs > LINE_CLEAR_NOTIF_LIMIT)
+		{
+			for(int i = 0; i < lineClearNotifications.Count; i++)
+			{
+				if(!lineClearNotifications[i].FastDecayEnabled)
+				{
+					lineClearNotifications[i].EnableFastDecayAnimation();
+					break; // Only enable fast decay on the oldest notification
+				}
+			}
+		}
+	}
+
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
 		SetLabel();
+		HideExcessiveLineClearNotifs();
 	}
 
 	private void SetUpNextQueuePreviews()
@@ -292,7 +312,7 @@ public partial class BoardDisplay : CanvasGroup
 			- heldPiecePreview.Scale*heldPiecePreview.Texture.GetSize() / 2
 			+ 40 * Vector2.Up + 30 * Vector2.Left
 			+ 20f * GD.Randf() * Vector2.FromAngle(GD.Randf() * float.Tau);
-		lineClearNotif.Scale = (float)GD.Randfn(0.4, 0.05) * Vector2.One;
+		lineClearNotif.Scale = (float)GD.RandRange(0.25, 0.3) * Vector2.One;
 		lineClearNotif.Rotation = (float)GD.Randfn(0, double.Pi/20);
 		lineClearNotif.SetLineClearTexture(linesCleared);
 		lineClearNotifications.Add(lineClearNotif);

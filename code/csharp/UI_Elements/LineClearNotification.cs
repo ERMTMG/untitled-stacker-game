@@ -29,6 +29,7 @@ public partial class LineClearNotification : Sprite2D
 	const double ANIMATION_SWITCHUP_LERP_SPEED = 0.20;
 	const double SLOW_ANIMATION_SPEED_DECREASE_FACTOR = 0.98;
 
+	public bool FastDecayEnabled => fastDecayEnabled;
 
 	public override void _Ready()
 	{

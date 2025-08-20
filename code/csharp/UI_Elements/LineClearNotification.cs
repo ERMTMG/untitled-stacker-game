@@ -25,9 +25,11 @@ public partial class LineClearNotification : Sprite2D
 	const double BASE_SHRINK_SPEED = 0.03;
 	const double FAST_VANISH_SPEED = 1.25;
 	const double FAST_SHRINK_SPEED = 0.05;
+	const double MIN_VANISH_SPEED = 0.125;
+	const double MIN_SHRINK_SPEED = 0.005;
 
 	const double ANIMATION_SWITCHUP_LERP_SPEED = 0.20;
-	const double SLOW_ANIMATION_SPEED_DECREASE_FACTOR = 0.98;
+	const double SLOW_ANIMATION_SPEED_DECREASE_FACTOR = 0.996;
 
 	public bool FastDecayEnabled => fastDecayEnabled;
 
@@ -71,8 +73,8 @@ public partial class LineClearNotification : Sprite2D
 			vanishSpeed += ANIMATION_SWITCHUP_LERP_SPEED * (FAST_VANISH_SPEED - vanishSpeed);
 			shrinkSpeed += ANIMATION_SWITCHUP_LERP_SPEED * (FAST_SHRINK_SPEED - shrinkSpeed);
 		} else {
-			vanishSpeed *= SLOW_ANIMATION_SPEED_DECREASE_FACTOR;
-			shrinkSpeed *= SLOW_ANIMATION_SPEED_DECREASE_FACTOR;
+			vanishSpeed = Math.Max(SLOW_ANIMATION_SPEED_DECREASE_FACTOR * vanishSpeed, MIN_VANISH_SPEED);
+			shrinkSpeed *= Math.Max(SLOW_ANIMATION_SPEED_DECREASE_FACTOR * shrinkSpeed, MIN_SHRINK_SPEED);
 		}
 
 		if(Scale <= Vector2.Zero || Modulate.A < 0f)

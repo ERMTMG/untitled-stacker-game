@@ -14,38 +14,6 @@
 [ext_resource type="FontFile" uid="uid://bugre5lt21s0w" path="res://assets/fonts/SF Atarian System Extended Bold Italic.ttf" id="10_mkkmm"]
 [ext_resource type="FontFile" uid="uid://wl2xlh2i2pdm" path="res://assets/fonts/SF Atarian System Extended Bold.ttf" id="11_lf7be"]
 
-[sub_resource type="Shader" id="Shader_1jnfq"]
-resource_local_to_scene = true
-code = "shader_type canvas_item;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
-
-uniform bool enabled;
-uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
-
-void fragment() {
-    COLOR = texture(TEXTURE, UV);
-	if(enabled){
-		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
-    	COLOR.rgb = vec3(avg) * lightness_factor;
-	}
-    
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxaik"]
-resource_local_to_scene = true
-shader = SubResource("Shader_1jnfq")
-shader_parameter/enabled = false
-shader_parameter/lightness_factor = 0.0
-
 [sub_resource type="Shader" id="Shader_mkkmm"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
@@ -206,6 +174,38 @@ shader = SubResource("Shader_8na78")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
+[sub_resource type="Shader" id="Shader_if1dr"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform bool enabled;
+uniform float lightness_factor : hint_range(0.0, 1.0, 0.01);
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	if(enabled){
+		float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
+    	COLOR.rgb = vec3(avg) * lightness_factor;
+	}
+    
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfqfg"]
+resource_local_to_scene = true
+shader = SubResource("Shader_if1dr")
+shader_parameter/enabled = false
+shader_parameter/lightness_factor = 0.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_o1x0d"]
 font = ExtResource("6_6yjih")
 font_size = 20
@@ -361,7 +361,7 @@ TileSize = 23
 BlockTexture = ExtResource("4_wnkqa")
 
 [node name="heldPiecePreview" parent="." instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_rxaik")
+material = SubResource("ShaderMaterial_lf7be")
 position = Vector2(-64, 40)
 
 [node name="spinIndicator" type="Sprite2D" parent="."]
@@ -373,23 +373,23 @@ script = ExtResource("7_lf7be")
 [node name="nextPiecePreviews" type="Node2D" parent="."]
 
 [node name="nextPiecePreview0" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_lf7be")
+material = SubResource("ShaderMaterial_l0ssp")
 position = Vector2(297, 41)
 
 [node name="nextPiecePreview1" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_l0ssp")
+material = SubResource("ShaderMaterial_dhyla")
 position = Vector2(293, 118)
 
 [node name="nextPiecePreview2" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_dhyla")
+material = SubResource("ShaderMaterial_gangk")
 position = Vector2(293, 196)
 
 [node name="nextPiecePreview3" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_gangk")
+material = SubResource("ShaderMaterial_mrox6")
 position = Vector2(292, 271)
 
 [node name="nextPiecePreview4" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_mrox6")
+material = SubResource("ShaderMaterial_yfqfg")
 position = Vector2(292, 348)
 
 [node name="infoLabel" type="Label" parent="."]

@@ -88,6 +88,8 @@ public partial class Piece {
 	private double lockDelayTimerSeconds;
 	private int lockDelayResets;
 	private bool isLastMoveRotation;
+	private CellPosition lastKickOffset;
+
 	public bool SpinState { get; private set; }
 
 	public GameBoard Board { get => board; set { board = value; } }
@@ -175,6 +177,7 @@ public partial class Piece {
 		this.lockDelayResets = 0;
 		this.isLastMoveRotation = false;
 		this.SpinState = false;
+		this.lastKickOffset = new(0,0);
 	}
 
 	private int GetRelativeTileValueInBoard(int i, int j)
@@ -447,6 +450,7 @@ public partial class Piece {
 			foreach(CellPosition offset in possibleOffsets)
 			{
 				relativePosition += offset;
+				this.lastKickOffset = offset;
 				if(IsCollidingWithBoard())
 				{
 					relativePosition -= offset;
@@ -459,6 +463,7 @@ public partial class Piece {
 			{
 				this.submatrix = prevSubmatrix;
 				this.rotationState = prevRotationState;
+				this.lastKickOffset = CellPosition.Zero;
 				return false; // No kick was able to be performed, piece didn't rotate
 			} else {
 				CheckSpinAndSendSignal();
@@ -466,6 +471,7 @@ public partial class Piece {
 			}
 			
 		} else {
+			this.lastKickOffset = CellPosition.Zero;
 			CheckSpinAndSendSignal();
 			return true; // Piece rotation valid in its initial state, no kicks necessary
 		}
@@ -570,6 +576,7 @@ public partial class Piece {
 	private SpinType CheckSpinPieceT()
 	{
 		const int TARGET_COVERED_SPIN_POINTS = 3;
+		const int MAX_SPIN_MINI_KICK_DISTANCE = 3;
 		if(!isLastMoveRotation)
 		{
 			return SpinType.NoSpin;
@@ -582,7 +589,13 @@ public partial class Piece {
 			if(coveredPrimarySpinPoints >= coveredSecondarySpinPoints)
 			{
 				return SpinType.TrueSpin;
-			} else {
+			} 
+			else if(Math.Abs(lastKickOffset.Row) + Math.Abs(lastKickOffset.Col) >= MAX_SPIN_MINI_KICK_DISTANCE) 
+			{ // Check for T-spin triple kick (or any kick which offsets the piece a distance of 3 or more)
+				return SpinType.TrueSpin;
+			} 
+			else 
+			{
 				return SpinType.SpinMini;
 			}
 		} else {
@@ -592,11 +605,11 @@ public partial class Piece {
 
 	public SpinType CheckSpin()
 	{
-		switch(this.ID)
+		return this.ID switch
 		{
-			case "T": return CheckSpinPieceT();
-			default: return CheckSpinDefault();
-		}
+			"T" => CheckSpinPieceT(),
+			_ => CheckSpinDefault(),
+		};
 	}
 
 	public void _Process(double delta)

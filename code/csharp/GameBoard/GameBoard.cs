@@ -406,6 +406,16 @@ public partial class GameBoard : Node
 		isGameActive = false;
 	}
 
+	private void IncrementCombo()
+	{
+		currentComboValue++;
+	}
+
+	private void ResetCombo()
+	{
+		currentComboValue = -1;
+	}
+
 	public override void _Process(double delta)
 	{
 		if(isGameActive)
@@ -437,7 +447,13 @@ public partial class GameBoard : Node
 		{
 			GD.Print($"({(spin == SpinType.SpinMini ? "Mini " : "")}Spin registered!)");
 		}
-		ClearFullRows();
+		if(clearedLines)
+		{
+			IncrementCombo();
+		} else {
+			ResetCombo();
+		}
+		GD.Print($"Current combo value: {(currentComboValue > -1 ? currentComboValue : "none")}");
 		SpawnNextPiece();
 	}
 

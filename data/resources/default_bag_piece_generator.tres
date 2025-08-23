@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_iscm5")
-availablePieces = PackedStringArray("T", "I", "O", "S", "Z", "L", "J")
+availablePieces = PackedStringArray("I", "T", "O", "S", "Z", "L", "J")
 metadata/_custom_type_script = "uid://ud8gmo48g552"

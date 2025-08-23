@@ -30,6 +30,7 @@ public partial class BoardDisplay : CanvasGroup
 	[Export] private PiecePreviewCell heldPiecePreview;
 	[Export] private Label infoLabel;
 	[Export] private Label countDownLabel;
+	[Export] private RichTextLabel comboLabel;
 	[Export] private AnimationPlayer animationPlayer;
 	[Export] private RichTextLabel postGameLabel;
 	[Export] private SpinIndicator spinIndicator;
@@ -113,8 +114,12 @@ public partial class BoardDisplay : CanvasGroup
 		{
 			X = (heldPiecePreview.Scale.X * heldPiecePreview.Texture.GetWidth()) - 5
 		};
-		
-
+		comboLabel.Position = infoLabel.Position + new Vector2(0, -50);
+		comboLabel.Size = comboLabel.Size with
+		{
+			X = (heldPiecePreview.Scale.X * heldPiecePreview.Texture.GetWidth()) - 10
+		};
+		comboLabel.Text = string.Empty;
 		countDownLabel.Position = (new Vector2(
 									boardDrawingComponent.BoardEffectiveWidth, 
 									boardDrawingComponent.BoardEffectiveHeight - countDownLabel.Size.Y
@@ -192,11 +197,32 @@ public partial class BoardDisplay : CanvasGroup
 		}
 	}
 
+	static readonly string[] COMBO_COLOR_HEX_CODES = [
+		"ff9aa2", "ffb7b2", "ffdac1", "e2f0cb", "b5ead7", "c7ceea"
+	];
+	public void SetComboLabel()
+	{
+		if(!board.ComboActive || board.ComboValue == 0)
+		{
+			comboLabel.Text = string.Empty;
+			return;
+		}
+		int comboNumber = board.ComboValue;
+		string comboHexCode = COMBO_COLOR_HEX_CODES[comboNumber % COMBO_COLOR_HEX_CODES.Length];
+		string comboString = $"[b][color={comboHexCode}]{comboNumber}[/color][/b]-COMBO";
+		
+		if(comboString != comboLabel.Text)
+		{
+			comboLabel.Text = comboString;
+		}
+	}
+
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
 		SetLabel();
 		HideExcessiveLineClearNotifs();
+		SetComboLabel();
 	}
 
 	private void SetUpNextQueuePreviews()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://k8hmenne3tsr"]
+[gd_scene load_steps=32 format=3 uid="uid://k8hmenne3tsr"]
 
 [ext_resource type="Script" uid="uid://c1a8xbc0v5k0q" path="res://code/csharp/BoardDisplay.cs" id="1_wwucy"]
 [ext_resource type="PackedScene" uid="uid://chccrguw8w7rs" path="res://scenes/game_board.tscn" id="3_wnkqa"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://cvkuhrjb4r166" path="res://assets/fonts/SF Atarian System Extended Italic.ttf" id="9_rxaik"]
 [ext_resource type="FontFile" uid="uid://bugre5lt21s0w" path="res://assets/fonts/SF Atarian System Extended Bold Italic.ttf" id="10_mkkmm"]
 [ext_resource type="FontFile" uid="uid://wl2xlh2i2pdm" path="res://assets/fonts/SF Atarian System Extended Bold.ttf" id="11_lf7be"]
+[ext_resource type="FontFile" uid="uid://cukpy3uvkw5w4" path="res://assets/fonts/Bluefish_Black_Demo.otf" id="14_lf7be"]
 
 [sub_resource type="Shader" id="Shader_mkkmm"]
 resource_local_to_scene = true
@@ -340,7 +341,7 @@ font_color = Color(0.266667, 0.913725, 0.752941, 0.733333)
 outline_size = 6
 outline_color = Color(0, 0.741176, 0.772549, 1)
 
-[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "animationPlayer", "postGameLabel", "spinIndicator")]
+[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "comboLabel", "animationPlayer", "postGameLabel", "spinIndicator")]
 script = ExtResource("1_wwucy")
 board = NodePath("board")
 boardDrawingComponent = NodePath("boardDrawingComponent")
@@ -348,6 +349,7 @@ nextPiecePreviews = [NodePath("nextPiecePreviews/nextPiecePreview0"), NodePath("
 heldPiecePreview = NodePath("heldPiecePreview")
 infoLabel = NodePath("infoLabel")
 countDownLabel = NodePath("countDownLabel")
+comboLabel = NodePath("comboLabel")
 animationPlayer = NodePath("AnimationPlayer")
 postGameLabel = NodePath("postGameLabel")
 spinIndicator = NodePath("spinIndicator")
@@ -435,3 +437,16 @@ bbcode_enabled = true
 text = "[b]Total Time[/b]: 1:07.438"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="comboLabel" type="RichTextLabel" parent="."]
+offset_left = -135.0
+offset_top = 193.0
+offset_right = -5.0
+offset_bottom = 234.0
+theme_override_fonts/normal_font = ExtResource("14_lf7be")
+theme_override_fonts/bold_font = ExtResource("14_lf7be")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 30
+bbcode_enabled = true
+text = "[b][color=ff9aa2]20[/color][/b]-COMBO"
+horizontal_alignment = 2

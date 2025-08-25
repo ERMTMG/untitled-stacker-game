@@ -15,7 +15,7 @@
 [ext_resource type="FontFile" uid="uid://wl2xlh2i2pdm" path="res://assets/fonts/SF Atarian System Extended Bold.ttf" id="11_lf7be"]
 [ext_resource type="FontFile" uid="uid://cukpy3uvkw5w4" path="res://assets/fonts/Bluefish_Black_Demo.otf" id="14_lf7be"]
 
-[sub_resource type="Shader" id="Shader_mkkmm"]
+[sub_resource type="Shader" id="Shader_lf7be"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -41,13 +41,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lf7be"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wino"]
 resource_local_to_scene = true
-shader = SubResource("Shader_mkkmm")
+shader = SubResource("Shader_lf7be")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_0wino"]
+[sub_resource type="Shader" id="Shader_l0ssp"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -73,13 +73,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0ssp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5djw"]
 resource_local_to_scene = true
-shader = SubResource("Shader_0wino")
+shader = SubResource("Shader_l0ssp")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_q5djw"]
+[sub_resource type="Shader" id="Shader_dhyla"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -105,13 +105,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhyla"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o1x0d"]
 resource_local_to_scene = true
-shader = SubResource("Shader_q5djw")
+shader = SubResource("Shader_dhyla")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_o1x0d"]
+[sub_resource type="Shader" id="Shader_gangk"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -137,13 +137,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gangk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8na78"]
 resource_local_to_scene = true
-shader = SubResource("Shader_o1x0d")
+shader = SubResource("Shader_gangk")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_8na78"]
+[sub_resource type="Shader" id="Shader_mrox6"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -169,13 +169,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrox6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_if1dr"]
 resource_local_to_scene = true
-shader = SubResource("Shader_8na78")
+shader = SubResource("Shader_mrox6")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_if1dr"]
+[sub_resource type="Shader" id="Shader_yfqfg"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -201,9 +201,9 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfqfg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd0je"]
 resource_local_to_scene = true
-shader = SubResource("Shader_if1dr")
+shader = SubResource("Shader_yfqfg")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
@@ -363,7 +363,7 @@ TileSize = 23
 BlockTexture = ExtResource("4_wnkqa")
 
 [node name="heldPiecePreview" parent="." instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_lf7be")
+material = SubResource("ShaderMaterial_0wino")
 position = Vector2(-64, 40)
 
 [node name="spinIndicator" type="Sprite2D" parent="."]
@@ -375,23 +375,23 @@ script = ExtResource("7_lf7be")
 [node name="nextPiecePreviews" type="Node2D" parent="."]
 
 [node name="nextPiecePreview0" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_l0ssp")
+material = SubResource("ShaderMaterial_q5djw")
 position = Vector2(297, 41)
 
 [node name="nextPiecePreview1" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_dhyla")
+material = SubResource("ShaderMaterial_o1x0d")
 position = Vector2(293, 118)
 
 [node name="nextPiecePreview2" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_gangk")
+material = SubResource("ShaderMaterial_8na78")
 position = Vector2(293, 196)
 
 [node name="nextPiecePreview3" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_mrox6")
+material = SubResource("ShaderMaterial_if1dr")
 position = Vector2(292, 271)
 
 [node name="nextPiecePreview4" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_yfqfg")
+material = SubResource("ShaderMaterial_gd0je")
 position = Vector2(292, 348)
 
 [node name="infoLabel" type="Label" parent="."]

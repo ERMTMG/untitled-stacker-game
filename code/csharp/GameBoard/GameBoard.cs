@@ -24,10 +24,12 @@ public partial class GameBoard : Node
 	private bool hasHeldPiece;
 	private bool isGameActive;
 	private int currentComboValue;
+	private int currentB2BValue;
 
 	private Piece currentPiece;
 	private SpinType latestSpin;
 	private PieceQueue pieceQueue;
+	private ClearHistory clearHistory;
 
 	[Export] private InputManager input;
 	[Export] private BoardSettings settings;
@@ -115,6 +117,7 @@ public partial class GameBoard : Node
 			(settings.Generator as RandomPieceGenerator).SetSeed(RNG_SEED);
 		}
 		pieceQueue = new PieceQueue(settings.Generator);
+		clearHistory = new ClearHistory();
 	}
 
 	public string GetPieceInQueuePos(int nextQueueIdx)
@@ -437,6 +440,20 @@ public partial class GameBoard : Node
 
 	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation info)
 	{
+		ClearInfo thisClearInfo = new(linesCleared, pieceID, info.Spin);
+		if(!thisClearInfo.IsDifficult())
+		{
+			currentB2BValue = -1;
+		} else {
+			if(clearHistory.Size > 0 && clearHistory.LatestClear.IsDifficult()){
+				currentB2BValue++;
+				GD.Print($"B2B chain increased to {currentB2BValue}!");
+			} else {
+				currentB2BValue = 0;
+				GD.Print("B2B chain started!");
+			}
+		}
+		clearHistory.PushClear(thisClearInfo);
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
 	}
 

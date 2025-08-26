@@ -23,7 +23,7 @@ public partial class GameBoard : Node
 	private double gravityMsPerTileCounter; // exclusively used by HandleGravity method
 	private string heldPieceName;
 	private bool hasHeldPiece;
-	private bool isGameActive;
+	private PauseMode pauseMode;
 	private int currentComboValue;
 	private int currentB2BValue;
 
@@ -56,6 +56,14 @@ public partial class GameBoard : Node
 		Guideline = BlockOut | GarbageOut | LockOut,
 
 		All = BlockOut | GarbageOut | LockOut | StrictGarbageOut
+	};
+
+	public enum PauseMode
+	{
+		Running          = 0, // Everything is enabled
+		ControlsDisabled = 1, // Only controlling the current piece is disabled
+		AnimationPlaying = 2, // Controls, gravity and piece spawning are disabled, timer still runs
+		AllPaused        = 3, // Everything is paused
 	};
 
 	GameBoard(BoardSettings settings)
@@ -142,7 +150,7 @@ public partial class GameBoard : Node
 		}
 		
 		hasHeldPiece = false;
-		isGameActive = false;
+		pauseMode = PauseMode.AllPaused;
 		currentComboValue = -1;
 
 		LineCleared += this.OnLineCleared;
@@ -150,6 +158,13 @@ public partial class GameBoard : Node
 		ToppedOut   += this.OnToppedOut;
 
 		ConnectInputSignals();
+		// NOTE: SoftDropReleased gets connected separately because ConnectInputSignals and 
+		// DisconnectInputSignals are called separately in other places, and that causes a bug when
+		// the soft drop button is pressed before DisconnectInputSignals gets called and is released
+		// after, making the softdrop automatically enabled the next time ConnectInputSignals is
+		// called. This way, softdrop being released disables the softdrop regardless of if the other
+		// input signals are connected
+		input.SoftDropReleased += OnSoftDropReleased;
 	}
 	
 	public int GetTileAt(int i, int j)
@@ -302,7 +317,7 @@ public partial class GameBoard : Node
 
 	private bool DropCurrentPieceSingleStep()
 	{
-		if(currentPiece.TryMove(1,0) == false)
+		if(currentPiece is not null && currentPiece.TryMove(1,0) == false)
 		{
 			// TODO: set flag indicating piece is on floor
 			return true;
@@ -429,17 +444,29 @@ public partial class GameBoard : Node
 			);
 			info.LinesCleared += totalRowsCleared;
 			GetTree().CreateTimer(1.0).Timeout += () => {
-				ConnectInputSignals();
+				SetPause(PauseMode.Running);
 				foreach(int row in rowsToRemove)
 				{
 					RemoveRow(row);
 				}
 			};
-			DisconnectInputSignals();
+			SetPause(PauseMode.AnimationPlaying);
 		}
 		return totalRowsCleared;
 	}
 
+	public void SetPause(PauseMode mode)
+	{
+		pauseMode = mode;
+		if(mode >= PauseMode.ControlsDisabled)
+		{
+			DisconnectInputSignals();
+		} else {
+			ConnectInputSignals();
+		}
+	}
+
+/*
 	public void UnPause()
 	{
 		isGameActive = true;
@@ -451,7 +478,7 @@ public partial class GameBoard : Node
 		DisconnectInputSignals();
 		isGameActive = false;
 	}
-
+*/
 	private void IncrementCombo()
 	{
 		currentComboValue++;
@@ -464,19 +491,21 @@ public partial class GameBoard : Node
 
 	public override void _Process(double delta)
 	{
-		if(isGameActive)
+		base._Process(delta);
+		if(pauseMode == PauseMode.AllPaused) return;
+		info.TimePassedSeconds += (decimal) Math.Round(delta, 3);
+		if(pauseMode < PauseMode.AnimationPlaying)
 		{
 			if(currentPiece is null)
 			{
 				SpawnNextPiece();
 			}
-			//ClearFullRows();
-			ClearFullRowsWithAre();
-			base._Process(delta);
 			currentPiece._Process(delta);
-			HandleLeftRightInput();
 			HandleGravity(delta);
-			info.TimePassedSeconds += (decimal) Math.Round(delta, 3);
+			if(pauseMode < PauseMode.ControlsDisabled)
+			{
+				HandleLeftRightInput();
+			}
 		}
 	}
 
@@ -515,7 +544,12 @@ public partial class GameBoard : Node
 			ResetCombo();
 		}
 		GD.Print($"Current combo value: {(currentComboValue > -1 ? currentComboValue : "none")}");
-		SpawnNextPiece();
+		if(pauseMode < PauseMode.AnimationPlaying)
+		{
+			SpawnNextPiece();
+		} else {
+			currentPiece = null;
+		}
 	}
 
 	private void OnCurrentPieceSpinned(SpinType spinType)

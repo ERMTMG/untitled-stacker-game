@@ -143,7 +143,7 @@ public partial class BoardDisplay : CanvasGroup
 
 	public void StartGameCountdown()
 	{
-		board.Pause();
+		board.SetPause(GameBoard.PauseMode.AllPaused);
 		animationPlayer.Play(StartCountdownAnimationName);
 	}
 
@@ -254,7 +254,7 @@ public partial class BoardDisplay : CanvasGroup
 
 	public void GameOverWin(string message = null)
 	{
-		board.Pause();
+		board.SetPause(GameBoard.PauseMode.AllPaused);
 		countDownLabel.Modulate = Colors.White;
 		if(!String.IsNullOrWhiteSpace(message))
 		{

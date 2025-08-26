@@ -15,7 +15,6 @@ public partial class GameBoard : Node
 		input.RotateRightPressed += OnRotatePieceRightPressed;
 		input.RotateFullPressed += OnRotatePieceFullPressed;
 		input.SoftDropPressed += OnSoftDropPressed;
-		input.SoftDropReleased += OnSoftDropReleased;
 	}
 
 	public void DisconnectInputSignals()
@@ -26,7 +25,6 @@ public partial class GameBoard : Node
 		input.RotateRightPressed -= OnRotatePieceRightPressed;
 		input.RotateFullPressed -= OnRotatePieceFullPressed;
 		input.SoftDropPressed -= OnSoftDropPressed;
-		input.SoftDropReleased -= OnSoftDropReleased;
 	}
 
 	public void OnHardDropPressed()

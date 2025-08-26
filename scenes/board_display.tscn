@@ -311,8 +311,8 @@ tracks/3/keys = {
 "times": PackedFloat32Array(3),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [],
-"method": &"UnPause"
+"args": [0],
+"method": &"SetPause"
 }]
 }
 tracks/4/type = "value"

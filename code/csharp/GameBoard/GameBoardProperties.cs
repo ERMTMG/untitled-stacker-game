@@ -66,7 +66,8 @@ public partial class GameBoard : Node
 	}
 
 
-	public bool GameActive => isGameActive;
+	public bool GameActive => (pauseMode < PauseMode.AllPaused);
+	public PauseMode CurrentPauseMode => pauseMode;
 	public bool ComboActive => (currentComboValue > -1);
 	public int ComboValue => currentComboValue;
 }

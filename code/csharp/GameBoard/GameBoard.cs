@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 namespace USG;
 
 public partial class GameBoard : Node
@@ -148,13 +149,7 @@ public partial class GameBoard : Node
 		PiecePlaced += this.OnPiecePlaced;
 		ToppedOut   += this.OnToppedOut;
 
-		input.HardDropPressed += OnHardDropPressed;
-		input.HoldPiecePressed += OnHoldPiecePressed;
-		input.RotateLeftPressed += OnRotatePieceLeftPressed;
-		input.RotateRightPressed += OnRotatePieceRightPressed;
-		input.RotateFullPressed += OnRotatePieceFullPressed;
-		input.SoftDropPressed += OnSoftDropPressed;
-		input.SoftDropReleased += OnSoftDropReleased;
+		ConnectInputSignals();
 	}
 	
 	public int GetTileAt(int i, int j)
@@ -183,7 +178,7 @@ public partial class GameBoard : Node
 	{
 		PrintCurrentPieceInMatrix();
 		CellPosition piecePosition = new(currentPiece.RelativePosition);
-		int clearedLines = ClearFullRows(
+		int clearedLines = ClearFullRowsWithAre(
 			new PiecePlacementInformation(piecePosition, currentPiece.Rotation, latestSpin)
 		);
 		info.PiecesPlaced++;
@@ -337,6 +332,19 @@ public partial class GameBoard : Node
 
 	}
 
+	private void EmptyRow(int rowIdx)
+	{
+		if(rowIdx < 0 || rowIdx >= BoardTrueHeight)
+		{
+			throw new IndexOutOfRangeException($"Row index out of range: {rowIdx} at GameBoard.RemoveRow");
+		} else {
+			for(int j = 0; j < BoardWidth; j++)
+			{
+				matrix[rowIdx, j] = 0;
+			}
+		}
+	}
+
 	private void RemoveRow(int rowIdx)
 	{
 		if(rowIdx < 0 || rowIdx >= BoardTrueHeight)
@@ -399,13 +407,48 @@ public partial class GameBoard : Node
 		return totalRowsCleared;
 	}
 
+	private int ClearFullRowsWithAre(PiecePlacementInformation pieceInfo = null)
+	{
+		int totalRowsCleared = 0;
+		List<int> rowsToRemove = new List<int>(10);
+		for(int i = 0; i < BoardTrueHeight; i++)
+		{
+			if(IsRowFull(i))
+			{
+				rowsToRemove.Add(i);
+				EmptyRow(i);
+				totalRowsCleared++;
+			}
+		}
+		if(totalRowsCleared > 0)
+		{
+			LineCleared?.Invoke(
+				totalRowsCleared,
+				currentPiece.ID,
+				pieceInfo
+			);
+			info.LinesCleared += totalRowsCleared;
+			GetTree().CreateTimer(1.0).Timeout += () => {
+				ConnectInputSignals();
+				foreach(int row in rowsToRemove)
+				{
+					RemoveRow(row);
+				}
+			};
+			DisconnectInputSignals();
+		}
+		return totalRowsCleared;
+	}
+
 	public void UnPause()
 	{
 		isGameActive = true;
+		ConnectInputSignals();
 	}
 
 	public void Pause()
 	{
+		DisconnectInputSignals();
 		isGameActive = false;
 	}
 
@@ -427,7 +470,8 @@ public partial class GameBoard : Node
 			{
 				SpawnNextPiece();
 			}
-			ClearFullRows();
+			//ClearFullRows();
+			ClearFullRowsWithAre();
 			base._Process(delta);
 			currentPiece._Process(delta);
 			HandleLeftRightInput();

@@ -7,6 +7,28 @@ namespace USG;
 // The part of the GameBoard class that responds to input signals
 public partial class GameBoard : Node
 {
+	private void ConnectInputSignals()
+	{
+		input.HardDropPressed += OnHardDropPressed;
+		input.HoldPiecePressed += OnHoldPiecePressed;
+		input.RotateLeftPressed += OnRotatePieceLeftPressed;
+		input.RotateRightPressed += OnRotatePieceRightPressed;
+		input.RotateFullPressed += OnRotatePieceFullPressed;
+		input.SoftDropPressed += OnSoftDropPressed;
+		input.SoftDropReleased += OnSoftDropReleased;
+	}
+
+	public void DisconnectInputSignals()
+	{
+		input.HardDropPressed -= OnHardDropPressed;
+		input.HoldPiecePressed -= OnHoldPiecePressed;
+		input.RotateLeftPressed -= OnRotatePieceLeftPressed;
+		input.RotateRightPressed -= OnRotatePieceRightPressed;
+		input.RotateFullPressed -= OnRotatePieceFullPressed;
+		input.SoftDropPressed -= OnSoftDropPressed;
+		input.SoftDropReleased -= OnSoftDropReleased;
+	}
+
 	public void OnHardDropPressed()
 	{
 		bool continueDrop = true;

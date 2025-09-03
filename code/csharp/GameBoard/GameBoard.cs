@@ -144,11 +144,11 @@ public partial class GameBoard : Node
 		//settings ??= new BoardSettings();
 		InitBoardSettings();
 
-		if(settings.Generator is BagPlusXPieceGenerator) 
+		if(settings.Generator is BagPlusXPieceGenerator)
 		{
 			GD.Print("something's wrong, i can feel it");
 		}
-		
+
 		hasHeldPiece = false;
 		pauseMode = PauseMode.AllPaused;
 		currentComboValue = -1;
@@ -158,7 +158,7 @@ public partial class GameBoard : Node
 		ToppedOut   += this.OnToppedOut;
 
 		ConnectInputSignals();
-		// NOTE: SoftDropReleased gets connected separately because ConnectInputSignals and 
+		// NOTE: SoftDropReleased gets connected separately because ConnectInputSignals and
 		// DisconnectInputSignals are called separately in other places, and that causes a bug when
 		// the soft drop button is pressed before DisconnectInputSignals gets called and is released
 		// after, making the softdrop automatically enabled the next time ConnectInputSignals is
@@ -166,10 +166,10 @@ public partial class GameBoard : Node
 		// input signals are connected
 		input.SoftDropReleased += OnSoftDropReleased;
 	}
-	
+
 	public int GetTileAt(int i, int j)
 	{
-		if(0 <= i && i < BOARD_HEIGHT 
+		if(0 <= i && i < BOARD_HEIGHT
 		&& 0 <= j && j < BOARD_WIDTH)
 		{
 			return matrix[i,j];
@@ -180,8 +180,8 @@ public partial class GameBoard : Node
 
 	public bool IsTileOccupied(int i, int j)
 	{
-		if(0 <= i && i < BOARD_HEIGHT 
-		&& 0 <= j && j < BOARD_WIDTH)
+		if(0 <= i && i < BOARD_HEIGHT
+		          && 0 <= j && j < BOARD_WIDTH)
 		{
 			return GetTileAt(i,j) != 0;
 		} else {
@@ -199,7 +199,7 @@ public partial class GameBoard : Node
 		info.PiecesPlaced++;
 		latestSpin = currentPiece.SpinState == true ? latestSpin : SpinType.NoSpin;
 		PiecePlaced?.Invoke(
-			currentPiece.ID, 
+			currentPiece.ID,
 			piecePosition,
 			currentPiece.Rotation,
 			latestSpin,
@@ -335,7 +335,7 @@ public partial class GameBoard : Node
 		double gravityInMsPerTile = 1.0/gravityInTilesPerMs;
 		gravityMsPerTileCounter += deltaInMs;
 		// This loops because pieces may fall more than one tile in a single step
-		while(gravityMsPerTileCounter > gravityInMsPerTile) 
+		while(gravityMsPerTileCounter > gravityInMsPerTile)
 		{
 			bool onFloor = DropCurrentPieceSingleStep();
 			gravityMsPerTileCounter -= gravityInMsPerTile;
@@ -373,7 +373,7 @@ public partial class GameBoard : Node
 				{
 					matrix[i,j] = matrix[i-1,j];
 				}
-			}		
+			}
 			// copy empty row to row 0 (see, PPT devs? it wasn't that hard)
 			for(int j = 0; j < BoardWidth; j++)
 			{
@@ -568,7 +568,7 @@ public partial class GameBoard : Node
 	{
 		if(type > TopOutType.All || int.PopCount((int)type) != 1)
 		{
-			throw new ArgumentException($"Invalid TopOutType value: {type:B} at GameBoard.TopOut");			
+			throw new ArgumentException($"Invalid TopOutType value: {type:B} at GameBoard.TopOut");
 		}
 		if((type | this.topOutTypesConsidered) != 0)
 		{

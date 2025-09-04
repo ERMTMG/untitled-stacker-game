@@ -193,9 +193,8 @@ public partial class GameBoard : Node
 	{
 		PrintCurrentPieceInMatrix();
 		CellPosition piecePosition = new(currentPiece.RelativePosition);
-		int clearedLines = ClearFullRowsWithAre(
-			new PiecePlacementInformation(piecePosition, currentPiece.Rotation, latestSpin)
-		);
+		PiecePlacementInformation pieceInfo = new(piecePosition, currentPiece.Rotation, latestSpin);
+		int clearedLines = (settings.LineClearAreSeconds == 0 ? ClearFullRows(pieceInfo) : ClearFullRowsWithAre(pieceInfo));
 		info.PiecesPlaced++;
 		latestSpin = currentPiece.SpinState == true ? latestSpin : SpinType.NoSpin;
 		PiecePlaced?.Invoke(
@@ -425,7 +424,7 @@ public partial class GameBoard : Node
 	private int ClearFullRowsWithAre(PiecePlacementInformation pieceInfo = null)
 	{
 		int totalRowsCleared = 0;
-		List<int> rowsToRemove = new List<int>(10);
+		List<int> rowsToRemove = new List<int>(10); // Note: We use a List to save the cleared rows because we wait until the ARE is done to remove them
 		for(int i = 0; i < BoardTrueHeight; i++)
 		{
 			if(IsRowFull(i))
@@ -442,8 +441,9 @@ public partial class GameBoard : Node
 				currentPiece.ID,
 				pieceInfo
 			);
+			LineClearAreAnimation?.Invoke(rowsToRemove, settings.LineClearAreSeconds);
 			info.LinesCleared += totalRowsCleared;
-			GetTree().CreateTimer(1.0).Timeout += () => {
+			GetTree().CreateTimer(settings.LineClearAreSeconds).Timeout += () => {
 				SetPause(PauseMode.Running);
 				foreach(int row in rowsToRemove)
 				{

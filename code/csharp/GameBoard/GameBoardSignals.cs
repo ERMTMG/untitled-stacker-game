@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace USG;
@@ -23,4 +24,7 @@ public partial class GameBoard : Node
 
     public delegate void ToppedOutEventHandler(TopOutType type);
     public event ToppedOutEventHandler ToppedOut;
+    
+    public delegate void LineClearAreAnimationEventHandler(List<int> rowsToClear, double areAnimationDuration);
+    public event LineClearAreAnimationEventHandler LineClearAreAnimation;
 }

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://iqac8aovj1dm"]
+
+[ext_resource type="Texture2D" uid="uid://dkcu1q0ny3re5" path="res://assets/graphics/board/white_square.png" id="1_8sk5f"]
+[ext_resource type="Script" uid="uid://b756xn7w8qlk3" path="res://code/csharp/UI_Elements/LineClearAnimationTest.cs" id="2_vhvj4"]
+
+[node name="line_clear_animation_basic" type="Sprite2D"]
+texture = ExtResource("1_8sk5f")
+centered = false
+script = ExtResource("2_vhvj4")

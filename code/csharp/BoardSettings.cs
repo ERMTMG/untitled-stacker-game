@@ -11,6 +11,7 @@ public partial class BoardSettings : Resource
 	private double arrSeconds;
 	private int softDropFactor;
 	public const int SDF_INFINITE = -1;
+	private double lineClearAreSeconds;
 	private int boardWidth;
 	private int boardHeight;
 	private int overBoardHeight;
@@ -142,6 +143,19 @@ public partial class BoardSettings : Resource
 		} 
 	}
 
+	[Export] public double LineClearAreSeconds
+	{
+		get => lineClearAreSeconds;
+		set
+		{
+			if(value < 0)
+			{
+				throw new ArgumentException($"Tried to set LineClearAreSeconds to {value}. ARE must be positive or equal to zero.");
+			}
+			lineClearAreSeconds = value;
+		}
+	}
+
 	public BoardSettings()
 	{
 		BoardWidth = 10;
@@ -150,6 +164,7 @@ public partial class BoardSettings : Resource
 		DasSeconds = 8.0/60.0; // = 8 frames
 		ArrSeconds = 0.00000001; // = ∞ ARR
 		SoftDropFactor = 40;
+		LineClearAreSeconds = 0.0;
 		BeginningGravityLevel = 1f/60f;
 		Generator = new BagPieceGenerator(Pieces.TetrominosBag.Clone() as string[]);
 		RNGSeed = null;

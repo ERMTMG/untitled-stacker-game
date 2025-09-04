@@ -25,7 +25,7 @@ project/assembly_name="Untitled Stacker Game"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/Edu Jr/Videos/Captures/godot_capture.avi"
+movie_writer/movie_file="/home/eduardo-r/Videos/godot_capture.avi"
 
 [input]
 

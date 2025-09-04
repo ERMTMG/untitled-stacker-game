@@ -39,8 +39,8 @@ public partial class BoardDisplay : CanvasGroup
 	private Stats statsShown;
 
 	public Vector2 BoardCenterOffset => new Vector2(
-		boardDrawingComponent.BoardEffectiveWidth / 2,
-		boardDrawingComponent.BoardEffectiveHeight / 2
+		boardDrawingComponent.BoardEffectiveWidth / 2f,
+		boardDrawingComponent.BoardEffectiveHeight / 2f
 	);
 
 	private static readonly StringName StartCountdownAnimationName = "starting_countdown";
@@ -79,6 +79,7 @@ public partial class BoardDisplay : CanvasGroup
 		board.PieceHeld += OnBoardPieceHeld;
 		board.ToppedOut += OnBoardToppedOut;
 		board.LineCleared += OnBoardLineCleared;
+		board.LineClearAreAnimation += OnBoardLineClearAreAnimation;
 		animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
 
 		board.Settings = this.boardSettings;
@@ -91,7 +92,7 @@ public partial class BoardDisplay : CanvasGroup
 	{
 		heldPiecePreview.PlaceUpperRightCornerAt(Vector2.Zero);
 		Vector2 boardUpperRightCorner = new(boardDrawingComponent.BoardEffectiveWidth,0);
-		if(nextPiecePreviews.Any())
+		if(nextPiecePreviews.Count != 0)
 		{
 			float piecePreviewSpriteHeight = 
 				nextPiecePreviews[0].Texture.GetHeight()*nextPiecePreviews[0].Scale.Y;
@@ -338,7 +339,7 @@ public partial class BoardDisplay : CanvasGroup
 		this.AddChild(lineClearNotif);
 		lineClearNotif.Position = 
 			BoardCenterOffset 
-			- new Vector2(boardDrawingComponent.BoardEffectiveWidth / 2, 0)
+			- new Vector2(boardDrawingComponent.BoardEffectiveWidth / 2f, 0)
 			- heldPiecePreview.Scale*heldPiecePreview.Texture.GetSize() / 2
 			+ 40 * Vector2.Up + 30 * Vector2.Left
 			+ 20f * GD.Randf() * Vector2.FromAngle(GD.Randf() * float.Tau);
@@ -350,6 +351,57 @@ public partial class BoardDisplay : CanvasGroup
 			lineClearNotifications.Remove(lineClearNotif);
 		};
 		this.LineCleared?.Invoke(linesCleared, pieceID);
+	}
+	
+	// TODO: bugs to fix:
+	// - Clicking gamemode buttons multiple times crashes game
+	// - ARR 0 doesn't work (again (for some reason))
+	
+	private void OnBoardLineClearAreAnimation(List<int> rowsCleared, double areAnimationDuration)
+	{
+		foreach(int rowIdx in rowsCleared)
+		{
+			Vector2 rowPosition = (rowIdx - board.BoardHiddenPortionHeight) * new Vector2(0, boardDrawingComponent.TileSize);
+			float halfRowWidth = boardDrawingComponent.BoardEffectiveWidth / 2f;
+			ColorRect animationRectLeft = new ColorRect();
+				animationRectLeft.Color = Colors.White;
+				animationRectLeft.Position = rowPosition;
+				animationRectLeft.Size = new(halfRowWidth, boardDrawingComponent.TileSize);
+			ColorRect animationRectRight = new ColorRect();
+				animationRectRight.Color = Colors.White;
+				animationRectRight.Position = rowPosition + halfRowWidth * Vector2.Right;
+				animationRectRight.Size = new(halfRowWidth, boardDrawingComponent.TileSize);
+			this.AddChild(animationRectLeft);
+			this.AddChild(animationRectRight);
+			Tween tween = GetTree().CreateTween();
+			tween.SetTrans(Tween.TransitionType.Quad)
+				 .SetEase(Tween.EaseType.Out)
+				 .SetParallel();
+			tween.TweenProperty(
+				animationRectLeft, "color", Colors.Transparent, areAnimationDuration
+			);
+			tween.TweenProperty(
+				animationRectRight, "color", Colors.Transparent, areAnimationDuration
+			);
+			tween.TweenProperty(
+				animationRectLeft, "size", new Vector2(0, boardDrawingComponent.TileSize), areAnimationDuration
+			);
+			tween.TweenProperty(
+				animationRectRight, "size", new Vector2(0, boardDrawingComponent.TileSize), areAnimationDuration
+			);
+			tween.TweenProperty(
+				animationRectRight, 
+				"position", 
+				animationRectRight.Position with {
+					X = boardDrawingComponent.BoardEffectiveWidth
+				}, 
+				areAnimationDuration
+			);
+			tween.Finished += () => {
+				animationRectLeft.QueueFree();
+				animationRectRight.QueueFree();
+			};
+		} 
 	}
 
 	private void OnBoardPieceSpinned(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spinType)

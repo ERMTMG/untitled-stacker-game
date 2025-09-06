@@ -8,7 +8,7 @@ namespace USG;
 
 public partial class MainMenuTemp : Control, ISceneDataEmitter
 {
-	[Export] public GC.Array<GameModeButton> buttons;
+	[Export] private GC.Array<GameModeButton> buttons;
 	
 	private static Action GetButtonSpecificEventHandler(Action<GameModeButton> genericEventHandler, GameModeButton button)
 	{
@@ -23,6 +23,10 @@ public partial class MainMenuTemp : Control, ISceneDataEmitter
 			GetTree().CreateTimer(0.25).Timeout += () => {
 				SceneManager.Instance.SwitchScene(scene, transitionKind: SceneTransitionScreen.TransitionKind.WipeToRight);
 			};
+			foreach(GameModeButton otherButton in buttons)
+			{
+				otherButton.Disabled = true;
+			}
 		}
 	}
 

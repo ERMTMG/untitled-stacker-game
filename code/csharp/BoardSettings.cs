@@ -35,7 +35,7 @@ public partial class BoardSettings : Resource
 	{ 
 		get => arrSeconds;
 		set {
-			if(value > 0.0)
+			if(value >= 0.0)
 			{
 				arrSeconds = value;
 			} else {
@@ -47,7 +47,7 @@ public partial class BoardSettings : Resource
 	[Export] public int SoftDropFactor { 
 		get => softDropFactor; 
 		set {
-			if(value >= 1 || value == SDF_INFINITE)
+			if(value is >= 1 or SDF_INFINITE)
 			{
 				softDropFactor = value;
 			} else {

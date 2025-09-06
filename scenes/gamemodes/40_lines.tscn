@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_o5vu5"]
 script = ExtResource("5_7tvig")
 DasSeconds = 0.133333
-ArrSeconds = 0.001
+ArrSeconds = 0.0
 SoftDropFactor = 40
 Generator = ExtResource("4_m7xhf")
 BoardWidth = 10

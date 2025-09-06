@@ -288,6 +288,22 @@ public partial class GameBoard : Node
 			default: break;
 		}
 	}
+	
+	private void MovePieceToWall(InputManager.HoldingDirection direction)
+	{
+		switch(direction)
+		{
+			case InputManager.HoldingDirection.Left:
+				while(currentPiece.TryMove(CellPosition.Left))
+				{ };
+				break;
+			case InputManager.HoldingDirection.Right:
+				while(currentPiece.TryMove(CellPosition.Right))
+				{ };
+				break;
+			default: break;
+		}
+	}
 
 	private void HandleLeftRightInput()
 	{
@@ -304,12 +320,18 @@ public partial class GameBoard : Node
 			double ARRTime = settings.ArrSeconds;
 			if(holdInfo.time > DASTime)
 			{
-				double totalARRTime = holdInfo.time - DASTime;
-				double totalARRTimeOld = holdInfo.oldTime - DASTime;
-				if((int)(totalARRTime/ARRTime) > (int)(totalARRTimeOld/ARRTime))
+				if(ARRTime == 0.0)
 				{
-					MovePiece(holdInfo.direction);
+					MovePieceToWall(holdInfo.direction);
+				} else {
+					double totalARRTime = holdInfo.time - DASTime;
+					double totalARRTimeOld = holdInfo.oldTime - DASTime;
+					if((int)(totalARRTime/ARRTime) > (int)(totalARRTimeOld/ARRTime))
+					{
+						MovePiece(holdInfo.direction);
+					}
 				}
+				
 			}
 		}
 	}

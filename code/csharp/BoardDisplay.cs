@@ -353,10 +353,6 @@ public partial class BoardDisplay : CanvasGroup
 		this.LineCleared?.Invoke(linesCleared, pieceID);
 	}
 	
-	// TODO: bugs to fix:
-	// - Clicking gamemode buttons multiple times crashes game
-	// - ARR 0 doesn't work (again (for some reason))
-	
 	private void OnBoardLineClearAreAnimation(List<int> rowsCleared, double areAnimationDuration)
 	{
 		foreach(int rowIdx in rowsCleared)

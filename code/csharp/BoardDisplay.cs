@@ -355,6 +355,8 @@ public partial class BoardDisplay : CanvasGroup
 	
 	private void OnBoardLineClearAreAnimation(List<int> rowsCleared, double areAnimationDuration)
 	{
+		double currentAnimationDuration = (rowsCleared.Count == 1 ? areAnimationDuration : areAnimationDuration / 2);
+		double animationDurationIncrement = (areAnimationDuration / 2) / rowsCleared.Count;
 		foreach(int rowIdx in rowsCleared)
 		{
 			Vector2 rowPosition = (rowIdx - board.BoardHiddenPortionHeight) * new Vector2(0, boardDrawingComponent.TileSize);
@@ -374,16 +376,16 @@ public partial class BoardDisplay : CanvasGroup
 				 .SetEase(Tween.EaseType.Out)
 				 .SetParallel();
 			tween.TweenProperty(
-				animationRectLeft, "color", Colors.Transparent, areAnimationDuration
+				animationRectLeft, "color", Colors.Transparent, currentAnimationDuration
 			);
 			tween.TweenProperty(
-				animationRectRight, "color", Colors.Transparent, areAnimationDuration
+				animationRectRight, "color", Colors.Transparent, currentAnimationDuration
 			);
 			tween.TweenProperty(
-				animationRectLeft, "size", new Vector2(0, boardDrawingComponent.TileSize), areAnimationDuration
+				animationRectLeft, "size", new Vector2(0, boardDrawingComponent.TileSize), currentAnimationDuration
 			);
 			tween.TweenProperty(
-				animationRectRight, "size", new Vector2(0, boardDrawingComponent.TileSize), areAnimationDuration
+				animationRectRight, "size", new Vector2(0, boardDrawingComponent.TileSize), currentAnimationDuration
 			);
 			tween.TweenProperty(
 				animationRectRight, 
@@ -391,12 +393,13 @@ public partial class BoardDisplay : CanvasGroup
 				animationRectRight.Position with {
 					X = boardDrawingComponent.BoardEffectiveWidth
 				}, 
-				areAnimationDuration
+				currentAnimationDuration
 			);
 			tween.Finished += () => {
 				animationRectLeft.QueueFree();
 				animationRectRight.QueueFree();
 			};
+			currentAnimationDuration += animationDurationIncrement;
 		} 
 	}
 

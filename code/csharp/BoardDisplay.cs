@@ -255,7 +255,7 @@ public partial class BoardDisplay : CanvasGroup
 
 	public void GameOverWin(string message = null)
 	{
-		board.SetPause(GameBoard.PauseMode.AllPaused);
+		board.SetPause(GameBoard.PauseMode.GameOver);
 		countDownLabel.Modulate = Colors.White;
 		if(!String.IsNullOrWhiteSpace(message))
 		{

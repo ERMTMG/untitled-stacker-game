@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_o5vu5"]
 script = ExtResource("5_7tvig")
-DasSeconds = 0.133333
+DasSeconds = 0.12
 ArrSeconds = 0.0
 SoftDropFactor = 40
 Generator = ExtResource("4_m7xhf")
@@ -18,7 +18,7 @@ OverBoardHeight = 20
 BeginningGravityLevel = 0.017
 LockDelaySeconds = 0.5
 TopOutTypesConsidered = 7
-LineClearAreSeconds = 0.333
+LineClearAreSeconds = 0.5
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
 
 [node name="match" instance=ExtResource("1_d6wwj")]

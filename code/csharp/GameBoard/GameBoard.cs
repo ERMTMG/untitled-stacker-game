@@ -46,6 +46,7 @@ public partial class GameBoard : Node
 		SpinType Spin = SpinType.NoSpin
 	);
 
+	[Flags]
 	public enum TopOutType
 	{
 		BlockOut         = 1 << 0,
@@ -64,6 +65,7 @@ public partial class GameBoard : Node
 		ControlsDisabled = 1, // Only controlling the current piece is disabled
 		AnimationPlaying = 2, // Controls, gravity and piece spawning are disabled, timer still runs
 		AllPaused        = 3, // Everything is paused
+		GameOver		 = 4, // Can't unpause from this state
 	};
 
 	GameBoard(BoardSettings settings)
@@ -479,6 +481,7 @@ public partial class GameBoard : Node
 
 	public void SetPause(PauseMode mode)
 	{
+		if(pauseMode == PauseMode.GameOver) return; // Doesn't allow to unpause once this state is reached
 		pauseMode = mode;
 		if(mode >= PauseMode.ControlsDisabled)
 		{
@@ -488,19 +491,6 @@ public partial class GameBoard : Node
 		}
 	}
 
-/*
-	public void UnPause()
-	{
-		isGameActive = true;
-		ConnectInputSignals();
-	}
-
-	public void Pause()
-	{
-		DisconnectInputSignals();
-		isGameActive = false;
-	}
-*/
 	private void IncrementCombo()
 	{
 		currentComboValue++;
@@ -514,7 +504,7 @@ public partial class GameBoard : Node
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-		if(pauseMode == PauseMode.AllPaused) return;
+		if(pauseMode >= PauseMode.AllPaused) return;
 		info.TimePassedSeconds += (decimal) Math.Round(delta, 3);
 		if(pauseMode < PauseMode.AnimationPlaying)
 		{

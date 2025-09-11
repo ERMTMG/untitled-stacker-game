@@ -17,8 +17,8 @@ BoardHeight = 20
 OverBoardHeight = 20
 BeginningGravityLevel = 0.017
 LockDelaySeconds = 0.5
-TopOutTypesConsidered = 7
-LineClearAreSeconds = 0.5
+TopOutTypesConsidered = 3
+LineClearAreSeconds = 0.0
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
 
 [node name="match" instance=ExtResource("1_d6wwj")]

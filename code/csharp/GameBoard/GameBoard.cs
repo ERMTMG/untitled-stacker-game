@@ -582,7 +582,7 @@ public partial class GameBoard : Node
 		{
 			throw new ArgumentException($"Invalid TopOutType value: {type:B} at GameBoard.TopOut");
 		}
-		if((type | this.topOutTypesConsidered) != 0)
+		if((type & this.topOutTypesConsidered) != 0)
 		{
 			ToppedOut?.Invoke(type);
 		}

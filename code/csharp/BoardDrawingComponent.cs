@@ -55,35 +55,35 @@ public partial class BoardDrawingComponent : Node2D
 	public override void _Draw()
 	{
 		int width = board.BoardWidth;
-		int heightBegin = board.BoardHiddenPortionHeight;
-		int heightEnd = board.BoardTrueHeight;
+		int height = board.BoardTrueHeight;
+		int hiddenHeight = board.BoardHiddenPortionHeight;
 		DrawRect(
-			new Rect2(Vector2.Zero, width*TileSize, (heightEnd - heightBegin)*TileSize), 
+			new Rect2(Vector2.Zero, width*TileSize, (height - hiddenHeight)*TileSize), 
 			new Color(0.23f, 0.23f, 0.43f, 0.35f)
 		);
 		if(DrawGrid)
 		{
-			DrawBoardGrid(width, heightBegin, heightEnd);
+			DrawBoardGrid(width, height, hiddenHeight);
 		}
-		DrawStaticBoard(width, heightBegin, heightEnd);
+		DrawStaticBoard(width, height, hiddenHeight);
 		if(DrawShadowPiece)
 		{
-			DrawBoardShadowPiece(width, heightBegin, heightEnd);
+			DrawBoardShadowPiece(width, height, hiddenHeight);
 		}
-		DrawBoardCurrentPiece(width, heightBegin, heightEnd);
+		DrawBoardCurrentPiece(width, height, hiddenHeight);
 		
 		base._Draw();
 	}
 
-	private void DrawStaticBoard(int width, int heightBegin, int heightEnd)
+	private void DrawStaticBoard(int width, int height, int hiddenHeight)
 	{
-		for(int i = heightBegin; i < heightEnd; i++)
+		for(int i = height - 1; i >= 0; i--)
 		{
 			for(int j = 0; j < width; j++)
 			{
 				Rect2 tileRect = new(
 					j*TileSize, 
-					(i-heightBegin)*TileSize, 
+					(i - hiddenHeight)*TileSize, 
 					TileSize*Vector2.One
 				);
 				int tileValue = board.GetTileAt(i,j);
@@ -95,7 +95,7 @@ public partial class BoardDrawingComponent : Node2D
 		} 
 	}
 
-	private void DrawBoardCurrentPiece(int width, int heightBegin, int heightEnd)
+	private void DrawBoardCurrentPiece(int width, int height, int hiddenHeight)
 	{
 		const float LOCK_DELAY_DARKENING_FACTOR = 0.3333f;
 
@@ -115,7 +115,7 @@ public partial class BoardDrawingComponent : Node2D
 			{
 				Rect2 tileRect = new(
 					(j + piece.RelativeCol)*TileSize, 
-					(i + piece.RelativeRow - heightBegin)*TileSize, 
+					(i + piece.RelativeRow - hiddenHeight)*TileSize, 
 					TileSize*Vector2.One
 				);
 				int tileValue = piece.Submatrix[i,j];
@@ -128,26 +128,26 @@ public partial class BoardDrawingComponent : Node2D
 		}
 	}
 
-	private void DrawBoardGrid(int width, int heightBegin, int heightEnd)
+	private void DrawBoardGrid(int width, int height, int hiddenHeight)
 	{
 		Color GRID_LINE_COLOR = new(1f, 1f, 1f, 0.35f);
 
 		for(int j = 0; j <= width; j++)
 		{
 			Vector2 gridLineBegin = new(j*TileSize, 0);
-			Vector2 gridLineEnd = new(j*TileSize, (heightEnd - heightBegin) * TileSize);
+			Vector2 gridLineEnd = new(j*TileSize, (height - hiddenHeight) * TileSize);
 			DrawLine(gridLineBegin, gridLineEnd, GRID_LINE_COLOR);
 		}
 
-		for(int i = heightBegin; i <= heightEnd; i++)
+		for(int i = hiddenHeight; i <= height; i++)
 		{
-			Vector2 gridLineBegin = new(0, (i - heightBegin)*TileSize);
-			Vector2 gridLineEnd = new(width*TileSize, (i - heightBegin) * TileSize);
+			Vector2 gridLineBegin = new(0, (i - hiddenHeight)*TileSize);
+			Vector2 gridLineEnd = new(width*TileSize, (i - hiddenHeight) * TileSize);
 			DrawLine(gridLineBegin, gridLineEnd, GRID_LINE_COLOR);
 		}
 	}
 
-	private void DrawBoardShadowPiece(int width, int heightBegin, int heightEnd)
+	private void DrawBoardShadowPiece(int width, int height, int hiddenHeight)
 	{
 		Piece piece = board.CurrentPiece;
 		if(piece is null)
@@ -165,7 +165,7 @@ public partial class BoardDrawingComponent : Node2D
 			{
 				Rect2 tileRect = new(
 					(j + piece.RelativeCol)*TileSize, 
-					(i + piece.RelativeRow - heightBegin)*TileSize, 
+					(i + piece.RelativeRow - hiddenHeight)*TileSize, 
 					TileSize*Vector2.One
 				);
 				int tileValue = piece.Submatrix[i,j];

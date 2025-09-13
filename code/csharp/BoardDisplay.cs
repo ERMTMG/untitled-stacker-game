@@ -23,6 +23,7 @@ public partial class BoardDisplay : CanvasGroup
 
 	static readonly PackedScene MinoPlacementEffectScene = GD.Load<PackedScene>("res://scenes/mino_placement_effect.tscn");
 	static readonly PackedScene LineClearNotificationScene = GD.Load<PackedScene>("res://scenes/ui/line_clear_notification.tscn");
+	static readonly Color ScoreLabelDefaultColor = new("#3386aa");
 
 	[Export] private GameBoard board;
 	[Export] private BoardDrawingComponent boardDrawingComponent;
@@ -35,6 +36,7 @@ public partial class BoardDisplay : CanvasGroup
 	[Export] private RichTextLabel postGameLabel;
 	[Export] private SpinIndicator spinIndicator;
 	[Export] private BoardSettings boardSettings;
+	[Export] private Label scoreLabel;
 
 	private Stats statsShown;
 
@@ -62,8 +64,10 @@ public partial class BoardDisplay : CanvasGroup
 	public decimal BoardTimeSeconds => board.TimePassedSeconds;
 	public int BoardLinesCleared => board.LinesCleared;
 	public int BoardPiecesPlaced => board.PiecesPlaced;
-	public List<LineClearNotif> lineClearNotifications;
-
+	public long BoardScore => board.Score;
+	private List<LineClearNotif> lineClearNotifications;
+	private long scoreDisplayValue;
+	
 	BoardDisplay() {}
 
 	public delegate void BoardToppedOutEventHandler(GameBoard.TopOutType type);
@@ -80,10 +84,12 @@ public partial class BoardDisplay : CanvasGroup
 		board.ToppedOut += OnBoardToppedOut;
 		board.LineCleared += OnBoardLineCleared;
 		board.LineClearAreAnimation += OnBoardLineClearAreAnimation;
+		board.ScoreAdded += OnBoardScoreAdded;
 		animationPlayer.AnimationFinished += OnAnimationPlayerFinished;
 
 		board.Settings = this.boardSettings;
 		this.lineClearNotifications = [];
+		this.scoreDisplayValue = 0;
 
 		SetUpBoardElementPositions();
 	}
@@ -105,6 +111,10 @@ public partial class BoardDisplay : CanvasGroup
 				);
 				cell.SetPiece(null);
 			}
+			scoreLabel.Position = boardUpperRightCorner 
+								  + nextPiecePreviews.Count * piecePreviewSpriteHeight * Vector2.Down
+								  + new Vector2(2, 15);
+			scoreLabel.Text = "000000000";
 		}
 
 		heldPiecePreview.SetPiece(null);
@@ -156,7 +166,7 @@ public partial class BoardDisplay : CanvasGroup
 		}
 	}
 
-	protected void SetLabel()
+	private void SetLabel()
 	{
 		StringBuilder labelText = new("");
 		if((statsShown | Stats.Time) != 0)
@@ -201,7 +211,8 @@ public partial class BoardDisplay : CanvasGroup
 	static readonly string[] COMBO_COLOR_HEX_CODES = [
 		"ff9aa2", "ffb7b2", "ffdac1", "e2f0cb", "b5ead7", "c7ceea"
 	];
-	public void SetComboLabel()
+
+	private void SetComboLabel()
 	{
 		if(!board.ComboActive || board.ComboValue == 0)
 		{
@@ -217,6 +228,16 @@ public partial class BoardDisplay : CanvasGroup
 			comboLabel.Text = comboString;
 		}
 	}
+	
+	private void SetScoreLabel()
+	{
+		if(BoardScore > scoreDisplayValue)
+		{
+			scoreDisplayValue += long.Max((BoardScore - scoreDisplayValue)/10, 1);
+		}
+		scoreLabel.Text = $"{scoreDisplayValue:D9}";
+		scoreLabel.LabelSettings.FontColor = scoreLabel.LabelSettings.FontColor.Lerp(ScoreLabelDefaultColor, 0.05f);
+	}
 
 	public override void _Process(double delta)
 	{
@@ -224,6 +245,7 @@ public partial class BoardDisplay : CanvasGroup
 		SetLabel();
 		HideExcessiveLineClearNotifs();
 		SetComboLabel();
+		SetScoreLabel();
 	}
 
 	private void SetUpNextQueuePreviews()
@@ -406,6 +428,16 @@ public partial class BoardDisplay : CanvasGroup
 	private void OnBoardPieceSpinned(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spinType)
 	{
 		
+	}
+	
+	private void OnBoardScoreAdded(long amount)
+	{
+		if(amount < 100)
+		{
+			scoreLabel.LabelSettings.FontColor = new Color("#5eb8e2");
+		} else {
+			scoreLabel.LabelSettings.FontColor = Colors.White;
+		}
 	}
 
 	public Texture2D GetTexture()

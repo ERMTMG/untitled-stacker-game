@@ -8,7 +8,7 @@ public class GameInfo
     const double SECONDS_PER_MINUTE = 60.0;
     const double TETRIO_VERSUS_MULTIPLIER = 100.0;
 
-    public long Score { get; set; }
+    public long Score { get; private set; }
     public int GameLevel { get; set; }
     public int PiecesPlaced { get; set; }
     public int AttackSent { get; set; }
@@ -31,5 +31,9 @@ public class GameInfo
         LinesCleared = 0;
         GarbageLinesCleared = 0;
     }
-
+    
+    public void AddScore(long increment)
+    {
+        Score += increment;
+    }
 }

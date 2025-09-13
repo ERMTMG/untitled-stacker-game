@@ -361,6 +361,10 @@ public partial class GameBoard : Node
 		while(gravityMsPerTileCounter > gravityInMsPerTile)
 		{
 			bool onFloor = DropCurrentPieceSingleStep();
+			if(isSoftDropping)
+			{
+				AddScoreFromSoftDropSingleRow();
+			}
 			gravityMsPerTileCounter -= gravityInMsPerTile;
 			if(onFloor)
 			{
@@ -523,9 +527,9 @@ public partial class GameBoard : Node
 
 	// TODO: delete these later
 
-	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation info)
+	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation pieceInfo)
 	{
-		ClearInfo thisClearInfo = new(linesCleared, pieceID, info.Spin);
+		ClearInfo thisClearInfo = new(linesCleared, pieceID, pieceInfo.Spin);
 		if(!thisClearInfo.IsDifficult())
 		{
 			currentB2BValue = -1;
@@ -540,6 +544,7 @@ public partial class GameBoard : Node
 		}
 		clearHistory.PushClear(thisClearInfo);
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
+		AddScoreFromClear(linesCleared, pieceInfo);
 	}
 
 	private void OnPiecePlaced(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin, bool clearedLines)
@@ -555,6 +560,7 @@ public partial class GameBoard : Node
 		} else {
 			ResetCombo();
 		}
+		AddScoreFromPiecePlacement(spin, clearedLines);
 		GD.Print($"Current combo value: {(currentComboValue > -1 ? currentComboValue : "none")}");
 		if(pauseMode < PauseMode.AnimationPlaying)
 		{

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://k8hmenne3tsr"]
+[gd_scene load_steps=34 format=3 uid="uid://k8hmenne3tsr"]
 
 [ext_resource type="Script" uid="uid://c1a8xbc0v5k0q" path="res://code/csharp/BoardDisplay.cs" id="1_wwucy"]
 [ext_resource type="PackedScene" uid="uid://chccrguw8w7rs" path="res://scenes/game_board.tscn" id="3_wnkqa"]
@@ -14,8 +14,9 @@
 [ext_resource type="FontFile" uid="uid://bugre5lt21s0w" path="res://assets/fonts/SF Atarian System Extended Bold Italic.ttf" id="10_mkkmm"]
 [ext_resource type="FontFile" uid="uid://wl2xlh2i2pdm" path="res://assets/fonts/SF Atarian System Extended Bold.ttf" id="11_lf7be"]
 [ext_resource type="FontFile" uid="uid://cukpy3uvkw5w4" path="res://assets/fonts/Bluefish_Black_Demo.otf" id="14_lf7be"]
+[ext_resource type="FontFile" uid="uid://c46vni0c10au" path="res://assets/fonts/LIQUIDNIGHT.ttf" id="15_0wino"]
 
-[sub_resource type="Shader" id="Shader_lf7be"]
+[sub_resource type="Shader" id="Shader_0wino"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -41,13 +42,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wino"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0ssp"]
 resource_local_to_scene = true
-shader = SubResource("Shader_lf7be")
+shader = SubResource("Shader_0wino")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_l0ssp"]
+[sub_resource type="Shader" id="Shader_q5djw"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -73,13 +74,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5djw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dhyla"]
 resource_local_to_scene = true
-shader = SubResource("Shader_l0ssp")
+shader = SubResource("Shader_q5djw")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_dhyla"]
+[sub_resource type="Shader" id="Shader_o1x0d"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -105,13 +106,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o1x0d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gangk"]
 resource_local_to_scene = true
-shader = SubResource("Shader_dhyla")
+shader = SubResource("Shader_o1x0d")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_gangk"]
+[sub_resource type="Shader" id="Shader_8na78"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -137,13 +138,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8na78"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrox6"]
 resource_local_to_scene = true
-shader = SubResource("Shader_gangk")
+shader = SubResource("Shader_8na78")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_mrox6"]
+[sub_resource type="Shader" id="Shader_if1dr"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -169,13 +170,13 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_if1dr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfqfg"]
 resource_local_to_scene = true
-shader = SubResource("Shader_mrox6")
+shader = SubResource("Shader_if1dr")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
-[sub_resource type="Shader" id="Shader_yfqfg"]
+[sub_resource type="Shader" id="Shader_gd0je"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -201,9 +202,9 @@ void fragment() {
 //}
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd0je"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iod1x"]
 resource_local_to_scene = true
-shader = SubResource("Shader_yfqfg")
+shader = SubResource("Shader_gd0je")
 shader_parameter/enabled = false
 shader_parameter/lightness_factor = 0.0
 
@@ -341,7 +342,12 @@ font_color = Color(0.266667, 0.913725, 0.752941, 0.733333)
 outline_size = 6
 outline_color = Color(0, 0.741176, 0.772549, 1)
 
-[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "comboLabel", "animationPlayer", "postGameLabel", "spinIndicator")]
+[sub_resource type="LabelSettings" id="LabelSettings_plkjy"]
+font = ExtResource("15_0wino")
+font_size = 18
+font_color = Color(0.367975, 0.723488, 0.887196, 1)
+
+[node name="boardDisplay" type="CanvasGroup" node_paths=PackedStringArray("board", "boardDrawingComponent", "nextPiecePreviews", "heldPiecePreview", "infoLabel", "countDownLabel", "comboLabel", "animationPlayer", "postGameLabel", "spinIndicator", "scoreLabel")]
 script = ExtResource("1_wwucy")
 board = NodePath("board")
 boardDrawingComponent = NodePath("boardDrawingComponent")
@@ -353,6 +359,7 @@ comboLabel = NodePath("comboLabel")
 animationPlayer = NodePath("AnimationPlayer")
 postGameLabel = NodePath("postGameLabel")
 spinIndicator = NodePath("spinIndicator")
+scoreLabel = NodePath("scoreLabel")
 
 [node name="board" parent="." instance=ExtResource("3_wnkqa")]
 
@@ -363,7 +370,7 @@ TileSize = 23
 BlockTexture = ExtResource("4_wnkqa")
 
 [node name="heldPiecePreview" parent="." instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_0wino")
+material = SubResource("ShaderMaterial_l0ssp")
 position = Vector2(-64, 40)
 
 [node name="spinIndicator" type="Sprite2D" parent="."]
@@ -375,23 +382,23 @@ script = ExtResource("7_lf7be")
 [node name="nextPiecePreviews" type="Node2D" parent="."]
 
 [node name="nextPiecePreview0" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_q5djw")
+material = SubResource("ShaderMaterial_dhyla")
 position = Vector2(297, 41)
 
 [node name="nextPiecePreview1" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_o1x0d")
+material = SubResource("ShaderMaterial_gangk")
 position = Vector2(293, 118)
 
 [node name="nextPiecePreview2" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_8na78")
+material = SubResource("ShaderMaterial_mrox6")
 position = Vector2(293, 196)
 
 [node name="nextPiecePreview3" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_if1dr")
+material = SubResource("ShaderMaterial_yfqfg")
 position = Vector2(292, 271)
 
 [node name="nextPiecePreview4" parent="nextPiecePreviews" instance=ExtResource("3_wwucy")]
-material = SubResource("ShaderMaterial_gd0je")
+material = SubResource("ShaderMaterial_iod1x")
 position = Vector2(292, 348)
 
 [node name="infoLabel" type="Label" parent="."]
@@ -450,3 +457,11 @@ theme_override_font_sizes/bold_font_size = 30
 bbcode_enabled = true
 text = "[b][color=ff9aa2]20[/color][/b]-COMBO"
 horizontal_alignment = 2
+
+[node name="scoreLabel" type="Label" parent="."]
+offset_left = 229.0
+offset_top = 395.0
+offset_right = 352.0
+offset_bottom = 418.0
+text = "000029853"
+label_settings = SubResource("LabelSettings_plkjy")

@@ -30,10 +30,14 @@ public partial class GameBoard : Node
 	public void OnHardDropPressed()
 	{
 		bool continueDrop = true;
+		int rowsDropped = -1;
 		do
 		{
 			continueDrop = CurrentPiece.TryMove(CellPosition.Down, resetLastMoveRotation: false);
+			rowsDropped++;
 		} while(continueDrop);
+		GD.Print($"Dropped rows: {rowsDropped}");
+		AddScoreFromHardDrop(rowsDropped);
 		PlaceCurrentPiece();
 	}
 	public void OnHoldPiecePressed()

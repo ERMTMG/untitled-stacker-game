@@ -27,4 +27,7 @@ public partial class GameBoard : Node
     
     public delegate void LineClearAreAnimationEventHandler(List<int> rowsToClear, double areAnimationDuration);
     public event LineClearAreAnimationEventHandler LineClearAreAnimation;
+    
+    public delegate void ScoreAddedEventHandler(long amount);
+    public event ScoreAddedEventHandler ScoreAdded;
 }

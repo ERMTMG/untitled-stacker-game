@@ -169,20 +169,20 @@ public partial class BoardDisplay : CanvasGroup
 	private void SetLabel()
 	{
 		StringBuilder labelText = new("");
-		if((statsShown | Stats.Time) != 0)
+		if((statsShown & Stats.Time) != 0)
 		{
 			TimeSpan time = TimeSpan.FromSeconds((double)board.TimePassedSeconds);
 			labelText.Append($"{time.Minutes}:{time.Seconds:D2}:{time.Milliseconds % 1000:D3}s\n\n");
 		}
-		if((statsShown | Stats.PiecesPlaced) != 0)
+		if((statsShown & Stats.PiecesPlaced) != 0)
 		{
 			labelText.Append($"pieces: {board.PiecesPlaced}\n\n");
 		}
-		if((statsShown | Stats.LinesCleared) != 0)
+		if((statsShown & Stats.LinesCleared) != 0)
 		{
 			labelText.Append($"lines: {board.LinesCleared}\n\n");
 		}
-		if((statsShown | Stats.PiecesPerSecond) != 0)
+		if((statsShown & Stats.PiecesPerSecond) != 0)
 		{
 			labelText.Append($"{board.PiecesPerSecond:F2}PPS");
 		}
@@ -432,12 +432,7 @@ public partial class BoardDisplay : CanvasGroup
 	
 	private void OnBoardScoreAdded(long amount)
 	{
-		if(amount < 100)
-		{
-			scoreLabel.LabelSettings.FontColor = new Color("#5eb8e2");
-		} else {
-			scoreLabel.LabelSettings.FontColor = Colors.White;
-		}
+		scoreLabel.LabelSettings.FontColor = amount < 100 ? new Color("#5eb8e2") : Colors.White;
 	}
 
 	public Texture2D GetTexture()

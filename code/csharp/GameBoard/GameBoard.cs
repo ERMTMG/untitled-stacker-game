@@ -183,7 +183,7 @@ public partial class GameBoard : Node
 	public bool IsTileOccupied(int i, int j)
 	{
 		if(0 <= i && i < BOARD_HEIGHT
-		          && 0 <= j && j < BOARD_WIDTH)
+				  && 0 <= j && j < BOARD_WIDTH)
 		{
 			return GetTileAt(i,j) != 0;
 		} else {

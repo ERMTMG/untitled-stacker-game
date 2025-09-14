@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://beqbdcpnvhg5c"]
+
+[ext_resource type="PackedScene" uid="uid://db4iof4u878yt" path="res://scenes/game.tscn" id="1_xpywt"]
+[ext_resource type="Texture2D" uid="uid://csb4flfxqcp53" path="res://assets/graphics/gui/level_icons/blitz.png" id="2_b23bs"]
+[ext_resource type="Script" uid="uid://d3ld5srt3x6ap" path="res://code/csharp/SceneClasses/GameSceneScoreAttack.cs" id="2_k2vhb"]
+[ext_resource type="Script" uid="uid://ud8gmo48g552" path="res://code/csharp/PieceGenerators/BagPieceGenerator.cs" id="3_m6xs2"]
+[ext_resource type="Script" uid="uid://cc47ivv4r3u7a" path="res://code/csharp/BoardSettings.cs" id="4_k2vhb"]
+
+[sub_resource type="Resource" id="Resource_qq2l6"]
+script = ExtResource("3_m6xs2")
+availablePieces = PackedStringArray("T", "I", "O", "S", "Z", "L", "J")
+
+[sub_resource type="Resource" id="Resource_lkep5"]
+script = ExtResource("4_k2vhb")
+DasSeconds = 0.133
+ArrSeconds = 0.0
+SoftDropFactor = -1
+Generator = SubResource("Resource_qq2l6")
+BoardWidth = 10
+BoardHeight = 20
+OverBoardHeight = 20
+BeginningGravityLevel = 0.0166667
+LockDelaySeconds = 0.5
+TopOutTypesConsidered = 7
+LineClearAreSeconds = 0.0
+metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
+
+[node name="match" instance=ExtResource("1_xpywt")]
+script = ExtResource("2_k2vhb")
+timeLimitSeconds = 120.0
+
+[node name="TextureRect" type="TextureRect" parent="." index="1"]
+modulate = Color(0.298039, 0.662745, 1, 0.101961)
+layout_mode = 0
+offset_left = 121.0
+offset_top = -45.0
+offset_right = 633.0
+offset_bottom = 467.0
+rotation = 0.387248
+texture = ExtResource("2_b23bs")
+
+[node name="TextureRect2" type="TextureRect" parent="." index="2"]
+modulate = Color(0.298039, 0.662745, 1, 0.101961)
+layout_mode = 0
+offset_left = 282.0
+offset_top = 220.0
+offset_right = 794.0
+offset_bottom = 732.0
+rotation = -0.511162
+scale = Vector2(1.51317, 1.51317)
+texture = ExtResource("2_b23bs")
+
+[node name="boardDisplay" parent="SubViewportContainer/SubViewport" index="0"]
+boardSettings = SubResource("Resource_lkep5")

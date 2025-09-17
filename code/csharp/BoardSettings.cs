@@ -18,6 +18,7 @@ public partial class BoardSettings : Resource
 	private double beginningGravityLevel;
 	private double lockDelaySeconds;
 	private GameBoard.TopOutType topOutTypesConsidered;
+	private int linesRequiredToLevelUp;
 
 	[Export] public double DasSeconds { 
 		get => dasSeconds; 
@@ -153,6 +154,24 @@ public partial class BoardSettings : Resource
 				throw new ArgumentException($"Tried to set LineClearAreSeconds to {value}. ARE must be positive or equal to zero.");
 			}
 			lineClearAreSeconds = value;
+		}
+	}
+	
+	[Export] public bool LevellingEnabled { get; set; }
+
+	[Export]
+	public int LinesRequiredToLevelUp
+	{
+		get => linesRequiredToLevelUp;
+		set
+		{
+			if(value > 0 || (value == 0 && !LevellingEnabled))
+			{
+				linesRequiredToLevelUp = value;
+			} else
+			{
+				throw new ArgumentException($"Tried to set LinesRequiredToLevelUp to {value}. Number of lines required to level up must be positive or 0 only if levelling is disabled.");
+			}
 		}
 	}
 

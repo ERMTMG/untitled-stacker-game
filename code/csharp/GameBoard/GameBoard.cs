@@ -439,12 +439,12 @@ public partial class GameBoard : Node
 		}
 		if(totalRowsCleared > 0)
 		{
+			info.LinesCleared += totalRowsCleared;
 			LineCleared?.Invoke(
 				totalRowsCleared,
 				currentPiece.ID,
 				pieceInfo
 			);
-			info.LinesCleared += totalRowsCleared;
 		}
 		return totalRowsCleared;
 	}
@@ -483,6 +483,17 @@ public partial class GameBoard : Node
 		return totalRowsCleared;
 	}
 
+	public void LevelUp()
+	{
+		info.GameLevel++;
+		GravityLevel = info.GetGravityFromLevel();
+		// TODO: make master levelling toggleable
+		if(GravityLevel == MAX_GRAVITY)
+		{
+			settings.LockDelaySeconds -= 0.05;
+		}
+	}
+	
 	public void SetPause(PauseMode mode)
 	{
 		if(pauseMode == PauseMode.GameOver) return; // Doesn't allow to unpause once this state is reached
@@ -545,6 +556,15 @@ public partial class GameBoard : Node
 		clearHistory.PushClear(thisClearInfo);
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
 		AddScoreFromClear(linesCleared, pieceInfo);
+		if(settings.LevellingEnabled)
+		{
+			int linesBeforeClear = info.LinesCleared - linesCleared; // info.LinesCleared represents total. i should probably rename it
+			int linesForLevelUp = settings.LinesRequiredToLevelUp;
+			if(linesBeforeClear/linesForLevelUp < info.LinesCleared/linesForLevelUp)
+			{
+				LevelUp();
+			}
+		}
 	}
 
 	private void OnPiecePlaced(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin, bool clearedLines)

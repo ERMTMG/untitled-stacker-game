@@ -19,6 +19,8 @@ BeginningGravityLevel = 0.017
 LockDelaySeconds = 0.5
 TopOutTypesConsidered = 3
 LineClearAreSeconds = 0.0
+LevellingEnabled = false
+LinesRequiredToLevelUp = 0
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
 
 [node name="match" instance=ExtResource("1_d6wwj")]

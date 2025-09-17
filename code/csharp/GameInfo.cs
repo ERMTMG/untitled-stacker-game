@@ -36,4 +36,14 @@ public class GameInfo
     {
         Score += increment;
     }
+    
+    public double GetGravityFromLevel()
+    {
+        return this.GameLevel switch
+        {
+            < GravityLevels.MIN_LEVEL => 0.0,
+            > GravityLevels.MAX_LEVEL => GameBoard.MAX_GRAVITY,
+            _ => GravityLevels.Levels[this.GameLevel]
+        };
+    }
 }

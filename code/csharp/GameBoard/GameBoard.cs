@@ -494,6 +494,11 @@ public partial class GameBoard : Node
 		}
 	}
 	
+	public void DisableLevelling()
+	{
+		settings.LevellingEnabled = false;
+	}
+	
 	public void SetPause(PauseMode mode)
 	{
 		if(pauseMode == PauseMode.GameOver) return; // Doesn't allow to unpause once this state is reached

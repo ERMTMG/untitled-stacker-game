@@ -4,4 +4,8 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>UntitledStackerGame</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="code\gdscript\match_scene.gd" />
+    <Content Include="code\gdscript\match_scene.gd.uid" />
+  </ItemGroup>
 </Project>

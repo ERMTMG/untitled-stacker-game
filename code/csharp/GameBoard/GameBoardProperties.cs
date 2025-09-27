@@ -52,6 +52,7 @@ public partial class GameBoard : Node
 	public long Score => info.Score;
 	public int PiecesPlaced => info.PiecesPlaced;
 	public int LinesCleared => info.LinesCleared;
+	public int GameLevel => info.GameLevel;
 	public decimal TimePassedSeconds => info.TimePassedSeconds;
 	public double PiecesPerSecond => info.PiecesPerSecond;
 

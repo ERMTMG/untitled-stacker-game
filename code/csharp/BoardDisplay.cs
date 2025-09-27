@@ -65,6 +65,8 @@ public partial class BoardDisplay : CanvasGroup
 	public int BoardLinesCleared => board.LinesCleared;
 	public int BoardPiecesPlaced => board.PiecesPlaced;
 	public long BoardScore => board.Score;
+	public int BoardGameLevel => board.GameLevel;
+	public double BoardGravityLevel => board.GravityLevel;
 	private List<LineClearNotif> lineClearNotifications;
 	private long scoreDisplayValue;
 	
@@ -433,6 +435,11 @@ public partial class BoardDisplay : CanvasGroup
 	private void OnBoardScoreAdded(long amount)
 	{
 		scoreLabel.LabelSettings.FontColor = amount < 100 ? new Color("#5eb8e2") : Colors.White;
+	}
+	
+	public void BoardDisableLevelling()
+	{
+		board.DisableLevelling();
 	}
 
 	public Texture2D GetTexture()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b73cm6f3m1nry"]
+[gd_scene load_steps=11 format=3 uid="uid://b73cm6f3m1nry"]
 
 [ext_resource type="Script" uid="uid://ckubeqn7jmukv" path="res://code/csharp/SceneClasses/MainMenuTemp.cs" id="1_fyvdc"]
 [ext_resource type="Texture2D" uid="uid://cik07c6t4p04b" path="res://assets/graphics/gui/backgrounds/background_neutral.png" id="1_kkwjd"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://t8c6y583o1ee" path="res://scenes/gamemodes/40_lines.tscn" id="5_ecsm2"]
 [ext_resource type="Texture2D" uid="uid://y8abkx6cury3" path="res://assets/graphics/gui/titlecard.png" id="6_ni7l2"]
 [ext_resource type="PackedScene" uid="uid://beqbdcpnvhg5c" path="res://scenes/gamemodes/score_attack.tscn" id="7_ecsm2"]
+[ext_resource type="PackedScene" uid="uid://d3jmaq1gqgg15" path="res://scenes/gamemodes/marathon.tscn" id="9_nq5ll"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("buttons")]
 layout_mode = 3
@@ -83,6 +84,7 @@ scale = Vector2(1.5, 1.5)
 GameModeName = "MARATHON"
 GameModeDescription = "Embark on a longer journey, where the more lines you clear, the more gravity pushes down on you. Will you outlast the pressure?"
 GameModeIcon = ExtResource("5_c7qy8")
+GameModeScene = ExtResource("9_nq5ll")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 1

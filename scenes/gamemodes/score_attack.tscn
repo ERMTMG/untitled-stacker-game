@@ -23,7 +23,7 @@ BeginningGravityLevel = 0.0166667
 LockDelaySeconds = 0.5
 TopOutTypesConsidered = 7
 LineClearAreSeconds = 0.0
-LevellingEnabled = true
+LevellingEnabled = false
 LinesRequiredToLevelUp = 10
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
 

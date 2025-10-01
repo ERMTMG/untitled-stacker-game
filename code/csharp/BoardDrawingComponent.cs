@@ -16,8 +16,8 @@ public partial class BoardDrawingComponent : Node2D
 		[5] = Colors.DarkTurquoise,
 		[6] = Colors.SlateBlue,
 		[7] = Colors.DarkOrchid,
-		[0] = new Color(0f, 0f, 0f, 0f),
-		// [-1] = new Color(.25f, .25f, .25f, .25f),
+		[0] = Colors.Transparent,
+		[-1] = Colors.DimGray
 		// [-2] = new Color(.50f, .25f, .25f, .25f)
 
 	};

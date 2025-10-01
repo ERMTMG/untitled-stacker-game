@@ -174,6 +174,8 @@ public partial class BoardSettings : Resource
 			}
 		}
 	}
+	
+	[Export] public bool AbsoluteMadness { get; set; }
 
 	public BoardSettings()
 	{
@@ -189,5 +191,8 @@ public partial class BoardSettings : Resource
 		RNGSeed = null;
 		LockDelaySeconds = 0.50;
 		TopOutTypesConsidered = GameBoard.TopOutType.Guideline;
+		LevellingEnabled = false;
+		linesRequiredToLevelUp = 10;
+		AbsoluteMadness = false;
 	}
 }

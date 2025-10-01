@@ -179,6 +179,17 @@ public partial class GameBoard : Node
 			throw new IndexOutOfRangeException($"Tile index out of range: ({i}, {j}) at GameBoard.GetTileAt");
 		}
 	}
+	
+	public int? GetTileAtNullable(int i, int j)
+	{
+		if(0 <= i && i < BOARD_HEIGHT
+		&& 0 <= j && j < BOARD_WIDTH)
+		{
+			return matrix[i,j];
+		} else {
+			return null;
+		}
+	}
 
 	public bool IsTileOccupied(int i, int j)
 	{
@@ -571,7 +582,35 @@ public partial class GameBoard : Node
 			}
 		}
 	}
-
+	private void AbsoluteMadnessMorphBoard()
+	{
+		int[,] newMatrix = new int[BoardTrueHeight, BoardWidth];
+		for(int i = 0; i < BoardTrueHeight; i++)
+		{
+			for(int j = 0; j < BoardWidth; j++)
+			{
+				int liveNeighbors = (((GetTileAtNullable(i+1, j)   ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i+1, j+1) ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i,   j+1) ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i-1, j+1) ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i-1, j)   ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i-1, j-1) ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i,   j-1) ?? 0) != 0) ? 1 : 0) + 
+				                    (((GetTileAtNullable(i+1, j-1) ?? 0) != 0) ? 1 : 0);
+				if(liveNeighbors is < 2 or > 3)
+				{
+					newMatrix[i,j] = 0;
+				} 
+				else if(liveNeighbors == 2)
+				{
+					newMatrix[i,j] = matrix[i,j] != 0 ? -1 : 0;
+				} else {
+					newMatrix[i,j] = -1;
+				}
+			}
+		}
+		matrix = newMatrix;
+	}
 	private void OnPiecePlaced(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin, bool clearedLines)
 	{
 		GD.Print($"Piece {pieceID} placed on row {piecePosition.Row}, column {piecePosition.Col}!");
@@ -587,6 +626,10 @@ public partial class GameBoard : Node
 		}
 		AddScoreFromPiecePlacement(spin, clearedLines);
 		GD.Print($"Current combo value: {(currentComboValue > -1 ? currentComboValue : "none")}");
+		if(settings.AbsoluteMadness && info.PiecesPlaced % 3 == 0 && info.PiecesPlaced != 0)
+		{
+			AbsoluteMadnessMorphBoard();	
+		}
 		if(pauseMode < PauseMode.AnimationPlaying)
 		{
 			SpawnNextPiece();

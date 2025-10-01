@@ -37,6 +37,7 @@ public partial class BoardDisplay : CanvasGroup
 	[Export] private SpinIndicator spinIndicator;
 	[Export] private BoardSettings boardSettings;
 	[Export] private Label scoreLabel;
+	[Export] private Sprite2D perfectClearPopup;
 
 	private Stats statsShown;
 
@@ -152,6 +153,7 @@ public partial class BoardDisplay : CanvasGroup
 		spinIndicator.Position = heldPieceLowerLeftCorner 
 			+ (spinIndicator.Scale.Y * spinIndicator.Texture.GetHeight() / 2)*Vector2.Down
 			+ (spinIndicator.Scale.X * spinIndicator.Texture.GetWidth() / 2)*Vector2.Left;
+		perfectClearPopup.Hide();
 	}
 
 	public void StartGameCountdown()
@@ -335,7 +337,7 @@ public partial class BoardDisplay : CanvasGroup
 			}
 		}
 	}
-
+	
 	private void OnBoardPiecePlaced(string pieceID, CellPosition position, RotationState rotationState, SpinType spin, bool clearedLines)
 	{
 		if(!clearedLines)
@@ -357,7 +359,32 @@ public partial class BoardDisplay : CanvasGroup
 		BoardToppedOut?.Invoke(type);
 	}
 
-	private void OnBoardLineCleared(int linesCleared, string pieceID, GameBoard.PiecePlacementInformation info)
+	private void DoPerfectClearPopupAnimation()
+	{
+		perfectClearPopup.Position = heldPiecePreview.Position with
+		{
+			Y = BoardCenterOffset.Y - 25
+		};
+		perfectClearPopup.Scale = Vector2.Zero;
+		perfectClearPopup.Modulate = Colors.Transparent;
+		perfectClearPopup.Show();
+		Tween tween = GetTree().CreateTween();
+		tween.SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+		tween.SetParallel();
+		tween.TweenProperty(perfectClearPopup, "scale", 0.25f * Vector2.One, 0.25);
+		tween.TweenProperty(perfectClearPopup, "position", BoardCenterOffset, 0.25);
+		tween.TweenProperty(perfectClearPopup, "modulate", Colors.White, 0.25);
+		tween.Finished += () =>
+		{
+			Tween tween2 = GetTree().CreateTween().SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.In).SetParallel();
+			tween2.TweenProperty(perfectClearPopup, "scale", 0.67f * Vector2.One, 1.50);
+			tween2.TweenProperty(perfectClearPopup, "modulate", Colors.Transparent, 1.50);
+			tween2.Finished += () => perfectClearPopup.Hide();
+		};
+		
+	}
+	
+	private void OnBoardLineCleared(int linesCleared, string pieceID, GameBoard.PiecePlacementInformation info, bool perfectClear)
 	{
 		LineClearNotif lineClearNotif = LineClearNotificationScene.Instantiate<LineClearNotif>();
 		this.AddChild(lineClearNotif);
@@ -374,6 +401,11 @@ public partial class BoardDisplay : CanvasGroup
 		lineClearNotif.TreeExiting += () => {
 			lineClearNotifications.Remove(lineClearNotif);
 		};
+		if(perfectClear)
+		{
+			GD.Print("creating perfect clear animation....");
+			DoPerfectClearPopupAnimation();
+		}
 		this.LineCleared?.Invoke(linesCleared, pieceID);
 	}
 	

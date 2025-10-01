@@ -7,7 +7,7 @@ namespace USG;
 public partial class GameBoard : Node
 {
     
-    public delegate void LineClearedEventHandler(int linesCleared, string pieceID, PiecePlacementInformation info);
+    public delegate void LineClearedEventHandler(int linesCleared, string pieceID, PiecePlacementInformation info, bool perfectClear);
     public event LineClearedEventHandler LineCleared;
     
     public delegate void PiecePlacedEventHandler(string pieceID, CellPosition piecePosition, RotationState rotationState, SpinType spin = SpinType.NoSpin, bool clearedLines = false);

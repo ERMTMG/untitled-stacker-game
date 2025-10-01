@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+
 namespace USG;
 
 public partial class GameBoard : Node
@@ -201,6 +203,21 @@ public partial class GameBoard : Node
 			throw new IndexOutOfRangeException($"Tile index out of range: ({i},{j}) at GameBoard.IsTileOccupied");
 		}
 	}
+	
+	private bool IsBoardFullCleared()
+	{
+		for(int i = 0; i < BoardTrueHeight; i++)
+		{
+			for(int j = 0; j < BoardWidth; j++)
+			{
+				if(matrix[i,j] != 0)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 	public void PlaceCurrentPiece()
 	{
@@ -333,7 +350,7 @@ public partial class GameBoard : Node
 			double ARRTime = settings.ArrSeconds;
 			if(holdInfo.time > DASTime)
 			{
-				if(ARRTime == 0.0)
+				if(ARRTime < 0.001)
 				{
 					MovePieceToWall(holdInfo.direction);
 				} else {
@@ -440,6 +457,7 @@ public partial class GameBoard : Node
 	private int ClearFullRows(PiecePlacementInformation pieceInfo = null)
 	{
 		int totalRowsCleared = 0;
+		bool isPerfectClear = false;
 		for(int i = 0; i < BoardTrueHeight; i++)
 		{
 			if(IsRowFull(i))
@@ -448,13 +466,18 @@ public partial class GameBoard : Node
 				totalRowsCleared++;
 			}
 		}
+		if(IsBoardFullCleared())
+		{
+			isPerfectClear = true;
+		}
 		if(totalRowsCleared > 0)
 		{
 			info.LinesCleared += totalRowsCleared;
 			LineCleared?.Invoke(
 				totalRowsCleared,
 				currentPiece.ID,
-				pieceInfo
+				pieceInfo,
+				isPerfectClear
 			);
 		}
 		return totalRowsCleared;
@@ -463,6 +486,7 @@ public partial class GameBoard : Node
 	private int ClearFullRowsWithAre(PiecePlacementInformation pieceInfo = null)
 	{
 		int totalRowsCleared = 0;
+		bool isPerfectClear = false;
 		List<int> rowsToRemove = new List<int>(10); // Note: We use a List to save the cleared rows because we wait until the ARE is done to remove them
 		for(int i = 0; i < BoardTrueHeight; i++)
 		{
@@ -473,15 +497,20 @@ public partial class GameBoard : Node
 				totalRowsCleared++;
 			}
 		}
+		if(IsBoardFullCleared())
+		{
+			isPerfectClear = true;
+		}
 		if(totalRowsCleared > 0)
 		{
+			info.LinesCleared += totalRowsCleared;
 			LineCleared?.Invoke(
 				totalRowsCleared,
 				currentPiece.ID,
-				pieceInfo
+				pieceInfo,
+				isPerfectClear
 			);
 			LineClearAreAnimation?.Invoke(rowsToRemove, settings.LineClearAreSeconds);
-			info.LinesCleared += totalRowsCleared;
 			GetTree().CreateTimer(settings.LineClearAreSeconds).Timeout += () => {
 				SetPause(PauseMode.Running);
 				foreach(int row in rowsToRemove)
@@ -554,7 +583,7 @@ public partial class GameBoard : Node
 
 	// TODO: delete these later
 
-	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation pieceInfo)
+	private void OnLineCleared(int linesCleared, string pieceID, PiecePlacementInformation pieceInfo, bool perfectClear)
 	{
 		ClearInfo thisClearInfo = new(linesCleared, pieceID, pieceInfo.Spin);
 		if(!thisClearInfo.IsDifficult())
@@ -571,7 +600,7 @@ public partial class GameBoard : Node
 		}
 		clearHistory.PushClear(thisClearInfo);
 		GD.Print($"{linesCleared} lines cleared with piece {pieceID}!");
-		AddScoreFromClear(linesCleared, pieceInfo);
+		AddScoreFromClear(linesCleared, pieceInfo, perfectClear);
 		if(settings.LevellingEnabled)
 		{
 			int linesBeforeClear = info.LinesCleared - linesCleared; // info.LinesCleared represents total. i should probably rename it

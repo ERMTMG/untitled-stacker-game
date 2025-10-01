@@ -10,7 +10,7 @@ public partial class GameBoard : Node
     static readonly long[] NORMAL_LINE_CLEAR_SCORES = [100, 300, 500, 800, 1100, 1500, 1900, 2400, 2900, 3500];
     static readonly long[] SPIN_LINE_CLEAR_SCORES = [800, 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000];
     static readonly long[] SPIN_MINI_LINE_CLEAR_SCORES = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800];
-    static readonly long[] PERFECT_CLEAR_LINE_CLEAR_SCORES = [800, 1200, 1800, 2000];
+    static readonly long[] PERFECT_CLEAR_LINE_CLEAR_SCORES = [800, 1200, 1800, 2000, 3000];
     const long COMBO_SCORE_BONUS = 50;
     const long CLEARLESS_SPIN_SCORE_BONUS = 400;
     const long CLEARLESS_MINI_SPIN_SCORE_BONUS = 100;
@@ -34,11 +34,14 @@ public partial class GameBoard : Node
         }
     }
     
-    private void AddScoreFromClear(int totalRowsCleared, PiecePlacementInformation pieceInfo)
+    private void AddScoreFromClear(int totalRowsCleared, PiecePlacementInformation pieceInfo, bool perfectClear)
     {
         long totalScore = 0;
         int level = info.GameLevel;
-        switch(pieceInfo.Spin)
+        if(perfectClear)
+        {
+            totalScore = PERFECT_CLEAR_LINE_CLEAR_SCORES[totalRowsCleared - 1];
+        } else switch(pieceInfo.Spin)
         {
             case SpinType.NoSpin:
                 totalScore = NORMAL_LINE_CLEAR_SCORES[totalRowsCleared - 1];
@@ -60,7 +63,6 @@ public partial class GameBoard : Node
         {
             totalScore = AddB2BMultiplierToScoreValue(totalScore);
         }
-        // TODO: Detect perfect clears and add corresponding score
         totalScore *= long.Max(level, 1);
         AddScore(totalScore);
     }

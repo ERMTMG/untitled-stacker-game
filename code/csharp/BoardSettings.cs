@@ -1,7 +1,19 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace USG;
+
+using KickTable = ReadOnlyDictionary<(RotationState, RotationDirection), CellPosition[]>;
+
+public enum KickTableValue
+{
+	SRSKickTable,
+	TechminoKickTable,
+	ASCRotationSystem,
+	NoKicks,
+}
 
 [Tool]
 [GlobalClass]
@@ -19,6 +31,7 @@ public partial class BoardSettings : Resource
 	private double lockDelaySeconds;
 	private GameBoard.TopOutType topOutTypesConsidered;
 	private int linesRequiredToLevelUp;
+	private KickTableValue setKickTable;
 
 	[Export] public double DasSeconds { 
 		get => dasSeconds; 
@@ -177,6 +190,34 @@ public partial class BoardSettings : Resource
 	
 	[Export] public bool AbsoluteMadness { get; set; }
 
+	[Export]
+	public KickTableValue SetKickTable
+	{
+		get => setKickTable;
+		set 
+		{
+			setKickTable = value;
+			switch(value)
+			{
+				case KickTableValue.SRSKickTable:
+					KickTables = Pieces.SRSKickTables; 
+					break;
+				case KickTableValue.TechminoKickTable:
+					break;
+				case KickTableValue.ASCRotationSystem:
+					break;
+				case KickTableValue.NoKicks:
+					KickTables = new (new Dictionary<string, KickTable>());
+					break;
+				default:
+					KickTables = null;
+					break;
+			}
+		}
+	}
+
+	public ReadOnlyDictionary<string, KickTable> KickTables { get; private set; }
+
 	public BoardSettings()
 	{
 		BoardWidth = 10;
@@ -194,5 +235,6 @@ public partial class BoardSettings : Resource
 		LevellingEnabled = false;
 		linesRequiredToLevelUp = 10;
 		AbsoluteMadness = false;
+		SetKickTable = KickTableValue.SRSKickTable;
 	}
 }

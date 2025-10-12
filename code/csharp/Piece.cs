@@ -1,8 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace USG;
+
+using KickTable = ReadOnlyDictionary<(RotationState, RotationDirection), CellPosition[]>;
 
 public record struct CellPosition
 {
@@ -431,7 +434,7 @@ public partial class Piece {
 		return tempSubmatrix;
 	}
 
-	public bool RotatePiece(RotationDirection direction)
+	public bool RotatePiece(RotationDirection direction, ReadOnlyDictionary<string, KickTable> kickTables)
 	{
 		if(IsOnFloor())
 		{
@@ -442,7 +445,7 @@ public partial class Piece {
 		int[,] prevSubmatrix = RotateMatrix(direction);
 		if(IsCollidingWithBoard())
 		{
-			var kickTable = Pieces.SRSKickTables.GetValueOrDefault(this.id, new(new Dictionary<(RotationState, RotationDirection), CellPosition[]>()));
+			var kickTable = kickTables.GetValueOrDefault(this.id, new(new Dictionary<(RotationState, RotationDirection), CellPosition[]>()));
 			var rotationKey = (prevRotationState, direction);
 			CellPosition[] possibleOffsets = kickTable.GetValueOrDefault(rotationKey, null);
 			possibleOffsets ??= [];

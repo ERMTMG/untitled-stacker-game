@@ -52,7 +52,7 @@ public partial class GameBoard : Node
 	public void OnRotatePiecePressed(int direction)
 	{
 		RotationDirection rotationDirection = (RotationDirection)direction;
-		currentPiece.RotatePiece(rotationDirection);
+		currentPiece.RotatePiece(rotationDirection, this.settings.KickTables);
 	}
 	public void OnRotatePieceLeftPressed() => OnRotatePiecePressed((int)RotationDirection.Left);
 	public void OnRotatePieceRightPressed() => OnRotatePiecePressed((int)RotationDirection.Right);

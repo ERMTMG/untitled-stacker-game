@@ -20,7 +20,7 @@ public static partial class Pieces
     const RotationDirection Right = RotationDirection.Right;
     const RotationDirection Left = RotationDirection.Left;
     const RotationDirection FullRotation = RotationDirection.FullRotation;
-
+    
     private static KickTable EmptyKickTable = new Dictionary<(RotationState, RotationDirection), CellPosition[]>
     {
         

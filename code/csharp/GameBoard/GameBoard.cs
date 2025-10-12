@@ -40,6 +40,8 @@ public partial class GameBoard : Node
 
 	private bool isSoftDropping;
 	private TopOutType topOutTypesConsidered;
+	
+	private GameBoard targetedBoard;
 
 	public record PiecePlacementInformation
 	(
@@ -98,6 +100,7 @@ public partial class GameBoard : Node
 			RNG_SEED = settings.RNGSeed.Value;
 		}
 		topOutTypesConsidered = settings.TopOutTypesConsidered;
+		targetedBoard = null;
 	}
 
 
@@ -147,11 +150,6 @@ public partial class GameBoard : Node
 		base._Ready();
 		//settings ??= new BoardSettings();
 		InitBoardSettings();
-
-		if(settings.Generator is BagPlusXPieceGenerator)
-		{
-			GD.Print("something's wrong, i can feel it");
-		}
 
 		hasHeldPiece = false;
 		pauseMode = PauseMode.AllPaused;
@@ -702,6 +700,20 @@ public partial class GameBoard : Node
 		};
 		GD.Print($"Game over! Reason: {deathMessage}");
 		QueueFree();
+	}
+	
+	public void Target(GameBoard board)
+	{
+		this.targetedBoard = board;
+	}
+	
+	private void SendAttack(int attack)
+	{
+		info.AttackSent += attack;
+		if(targetedBoard is not null)
+		{
+			// TODO: actually send garbage to the board
+		}
 	}
 
 }

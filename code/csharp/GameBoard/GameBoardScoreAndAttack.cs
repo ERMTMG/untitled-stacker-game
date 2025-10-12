@@ -76,4 +76,49 @@ public partial class GameBoard : Node
     {
         AddScore(SOFT_DROP_SCORE_PER_ROW);
     }
+    
+    static readonly decimal[] NORMAL_LINE_CLEAR_ATTACK = [0, 0.5m, 1, 2, 4, 6, 10, 14, 20, 26, 34];
+    static readonly decimal[] SPIN_LINE_CLEAR_ATTACK = [0, 2, 4, 6, 8, 12, 16, 22, 30, 40, 52];
+    const decimal PERFECT_CLEAR_ATTACK = 10;
+    
+    private decimal GetBackToBackBonus(decimal normalAttack)
+    {
+        return 1;
+    }
+    
+    private decimal GetCorrespondingComboAttack(decimal normalAttack)
+    {
+        return normalAttack * (1 + ComboValue * 0.1m);
+    }
+    
+    private int GetAttackFromClear(int totalRowsCleared, PiecePlacementInformation pieceInfo, bool perfectClear)
+    {
+        decimal totalAttack = 0;
+        switch(pieceInfo.Spin)
+        {
+            case SpinType.TrueSpin:
+                totalAttack = (totalRowsCleared >= SPIN_LINE_CLEAR_ATTACK.Length) ? 
+                    SPIN_LINE_CLEAR_ATTACK[^1] : 
+                    SPIN_LINE_CLEAR_ATTACK[totalRowsCleared];
+                break;
+            default:
+                totalAttack = (totalRowsCleared >= NORMAL_LINE_CLEAR_ATTACK.Length) ?
+                    NORMAL_LINE_CLEAR_ATTACK[^1] :
+                    NORMAL_LINE_CLEAR_ATTACK[totalRowsCleared];
+                break;
+        }
+        if(currentB2BValue > 0)
+        {
+            totalAttack += GetBackToBackBonus(totalAttack);
+        }
+        if(ComboActive)
+        {
+            totalAttack = GetCorrespondingComboAttack(totalAttack);
+        }
+        if(perfectClear)
+        {
+            totalAttack += PERFECT_CLEAR_ATTACK;
+        }
+        return (int)totalAttack;
+    }
 }

@@ -25,35 +25,43 @@ public static partial class Pieces
     {
         
     }.AsReadOnly();
-
+    
     private static KickTable SRSGenericTetrominoKickTable = new Dictionary<(RotationState, RotationDirection), CellPosition[]>()
     {
         [(North, Right)] = [new (0,-1), new (-1,-1), new (2,0), new (2,-1)],
         [(North, Left)] = [new (0,1), new (-1,1), new (2,0), new (2,1)],
+        [(North, FullRotation)] = [new (-1, 0), new (-1, 1), new (-1, -1), new(0, 1), new (0, -1)],
 
         [(East, Right)] = [new (0,1), new (1,1), new (-2,0), new (-2,1)],
         [(East, Left)] = [new (0,1), new (1,1), new (-2,0), new (-2,1)],
+        [(East, FullRotation)] = [new (0,1), new (-2, 1), new (-1, 1), new (-2, 0), new (-1, 0)],
 
         [(South, Right)] = [new (0,1), new (-1,1), new (2,0), new (2,1)],
         [(South, Left)] = [new (0,-1), new (-1,-1), new (2,0), new (2,-1)],
+        [(South, FullRotation)] = [new (1, 0), new (1, -1), new (1, 1), new(0, -1), new (0, 1)],
 
         [(West, Right)] = [new (0,-1), new (1,-1), new (-2,0), new (-2,-1)],
         [(West, Left)] = [new (0,-1), new (1,-1), new (-2,0), new (-2,-1)],
+        [(West, FullRotation)] = [new (0,-1), new (-2, -1), new (-1, -1), new (-2, 0), new (-1, 0)],
     }.AsReadOnly();
 
     private static KickTable SRSITetrominoKickTable = new Dictionary<(RotationState, RotationDirection), CellPosition[]>()
     {
         [(North, Right)] = [new (0,-2), new (0,1), new (1,-2), new (-2,1)],
         [(North, Left)] = [new (0,-1), new (0,2), new (-2,-1), new (1,2)],
+        [(North, FullRotation)] = [new (-1, 0)],
 
         [(East, Right)] = [new (0,-1), new (0,2), new (-2,-1), new (1,2)],
         [(East, Left)] = [new (0,2), new (0,-1), new (-1,2), new (2,-1)],
+        [(East, FullRotation)] = [new (0, 1)],
 
         [(South, Right)] = [new (0,2), new (0,-1), new (-1,2), new (2,-1)],
         [(South, Left)] = [new (0,1), new (0,-2), new (2,1), new (-1,-2)],
-
+        [(South, FullRotation)] = [new (1, 0)],
+        
         [(West, Right)] = [new (0,1), new (0,-2), new (2,1), new (-1,-2)],
         [(West, Left)] = [new (0,-2), new (0,1), new (1,-2), new (-2,1)],
+        [(West, FullRotation)] = [new (0, -1)],
     }.AsReadOnly();
 
     public static readonly ReadOnlyDictionary<PieceID, KickTable> SRSKickTables = new Dictionary<PieceID, KickTable>()

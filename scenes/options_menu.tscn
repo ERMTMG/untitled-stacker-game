@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://cofd7ta3py4m0"]
+
+[ext_resource type="Texture2D" uid="uid://cik07c6t4p04b" path="res://assets/graphics/gui/backgrounds/background_neutral.png" id="1_hm4m4"]
+[ext_resource type="Script" uid="uid://bv7visyv8p80t" path="res://code/csharp/UI_Elements/OptionsMenuBackgroundGears.cs" id="2_lfjc7"]
+[ext_resource type="Texture2D" uid="uid://brjfoswcqf41u" path="res://assets/graphics/gui/backgrounds/bg_gear.png" id="3_3xsyx"]
+[ext_resource type="PackedScene" uid="uid://banrmjs53auek" path="res://scenes/ui/menu_title.tscn" id="4_lfjc7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="TextureRect" parent="."]
+modulate = Color(1.5, 1.5, 1.5, 1)
+layout_mode = 0
+offset_left = -757.0
+offset_top = 802.0
+offset_right = 609.0
+offset_bottom = 1570.0
+rotation = -0.839301
+scale = Vector2(1.8082, 1.8082)
+texture = ExtResource("1_hm4m4")
+
+[node name="gears" type="Control" parent="." node_paths=PackedStringArray("gear1", "gear2")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_lfjc7")
+gear1 = NodePath("gear1")
+gear2 = NodePath("gear2")
+RotationSpeed = 0.15
+
+[node name="gear1" type="TextureRect" parent="gears"]
+modulate = Color(1, 1, 1, 0.270588)
+layout_mode = 0
+offset_left = 163.0
+offset_top = 80.0
+offset_right = 963.0
+offset_bottom = 880.0
+rotation = -6.28319
+pivot_offset = Vector2(404, 395)
+texture = ExtResource("3_3xsyx")
+
+[node name="gear2" type="TextureRect" parent="gears"]
+modulate = Color(1, 1, 1, 0.176471)
+layout_mode = 0
+offset_left = 485.0
+offset_top = -223.0
+offset_right = 1285.0
+offset_bottom = 577.0
+rotation = -5.82416
+pivot_offset = Vector2(404, 395)
+texture = ExtResource("3_3xsyx")
+
+[node name="titleBar" parent="." instance=ExtResource("4_lfjc7")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 400.0
+offset_bottom = 60.0

@@ -23,4 +23,5 @@ LineClearAreSeconds = 0.0
 LevellingEnabled = false
 LinesRequiredToLevelUp = 10
 AbsoluteMadness = false
+SetKickTable = 0
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"

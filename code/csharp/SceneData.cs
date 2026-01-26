@@ -17,3 +17,21 @@ public record class TestMessageSceneData : SceneData
         Message = message;
     }
 }
+
+public record class GamemodeSettingsSceneData : SceneData
+{
+    public PackedScene GameScene { get; init; }
+    public BoardSettings Settings { get; set; }
+    
+    public GamemodeSettingsSceneData(PackedScene gameScene, BoardSettings settings)
+    {
+        GameScene = gameScene;
+        Settings = settings;
+    }
+    
+    public GamemodeSettingsSceneData(PackedScene gameScene)
+    {
+        GameScene = gameScene;
+        Settings = new BoardSettings();
+    }
+}

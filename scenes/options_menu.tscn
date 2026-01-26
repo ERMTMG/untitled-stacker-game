@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cofd7ta3py4m0"]
 
+[ext_resource type="Script" uid="uid://tvnnkxqkufk5" path="res://code/csharp/SceneClasses/BeforeGameMenu.cs" id="1_7txom"]
 [ext_resource type="Texture2D" uid="uid://cik07c6t4p04b" path="res://assets/graphics/gui/backgrounds/background_neutral.png" id="1_hm4m4"]
 [ext_resource type="Script" uid="uid://bv7visyv8p80t" path="res://code/csharp/UI_Elements/OptionsMenuBackgroundGears.cs" id="2_lfjc7"]
 [ext_resource type="Texture2D" uid="uid://brjfoswcqf41u" path="res://assets/graphics/gui/backgrounds/bg_gear.png" id="3_3xsyx"]
@@ -15,13 +16,20 @@ font_size = 23
 [sub_resource type="LabelSettings" id="LabelSettings_k61yy"]
 font_size = 64
 
-[node name="Control" type="Control" unique_id=826914512]
+[node name="Control" type="Control" unique_id=826914512 node_paths=PackedStringArray("goButton", "boardWidthValue", "boardHeightValue", "generatorOption", "pieceSetOption", "kickTableOption")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7txom")
+goButton = NodePath("GoButton")
+boardWidthValue = NodePath("optionsFrame/options/GridContainer/boardWidthOption")
+boardHeightValue = NodePath("optionsFrame/options/GridContainer/boardHeightOption")
+generatorOption = NodePath("optionsFrame/options/GridContainer/generatorOption")
+pieceSetOption = NodePath("optionsFrame/options/GridContainer/pieceSetOption")
+kickTableOption = NodePath("optionsFrame/options/GridContainer/kickTableOption")
 
 [node name="background" type="TextureRect" parent="." unique_id=381398650]
 modulate = Color(1.5, 1.5, 1.5, 1)

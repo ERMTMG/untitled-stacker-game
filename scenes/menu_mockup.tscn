@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://b73cm6f3m1nry"]
+[gd_scene format=3 uid="uid://b73cm6f3m1nry"]
 
 [ext_resource type="Script" uid="uid://ckubeqn7jmukv" path="res://code/csharp/SceneClasses/MainMenuTemp.cs" id="1_fyvdc"]
 [ext_resource type="Texture2D" uid="uid://cik07c6t4p04b" path="res://assets/graphics/gui/backgrounds/background_neutral.png" id="1_kkwjd"]
 [ext_resource type="PackedScene" uid="uid://dyhhf3pv37eu7" path="res://scenes/ui/game_mode_button.tscn" id="2_0781p"]
+[ext_resource type="PackedScene" uid="uid://cofd7ta3py4m0" path="res://scenes/options_menu.tscn" id="2_ttwl2"]
 [ext_resource type="Texture2D" uid="uid://blthrpab31a5m" path="res://assets/graphics/gui/level_icons/sprint.png" id="3_0781p"]
 [ext_resource type="Texture2D" uid="uid://csb4flfxqcp53" path="res://assets/graphics/gui/level_icons/blitz.png" id="4_uwg66"]
 [ext_resource type="Texture2D" uid="uid://dwcgqndn8y7oe" path="res://assets/graphics/gui/level_icons/marathon.png" id="5_c7qy8"]
@@ -11,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://beqbdcpnvhg5c" path="res://scenes/gamemodes/score_attack.tscn" id="7_ecsm2"]
 [ext_resource type="PackedScene" uid="uid://d3jmaq1gqgg15" path="res://scenes/gamemodes/marathon.tscn" id="9_nq5ll"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("buttons")]
+[node name="Control" type="Control" unique_id=1974220880 node_paths=PackedStringArray("buttons")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,14 +23,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fyvdc")
 buttons = [NodePath("game_mode_button"), NodePath("game_mode_button2"), NodePath("game_mode_button3")]
+SettingsScene = ExtResource("2_ttwl2")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=188693468]
 layout_mode = 0
 offset_right = 1366.0
 offset_bottom = 768.0
 texture = ExtResource("1_kkwjd")
 
-[node name="game_mode_button" parent="." instance=ExtResource("2_0781p")]
+[node name="game_mode_button" parent="." unique_id=1733643964 instance=ExtResource("2_0781p")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,7 +50,7 @@ GameModeDescription = "Test your speed by clearing [b]40 lines[/b] as quickly as
 GameModeIcon = ExtResource("3_0781p")
 GameModeScene = ExtResource("5_ecsm2")
 
-[node name="game_mode_button2" parent="." instance=ExtResource("2_0781p")]
+[node name="game_mode_button2" parent="." unique_id=842856450 instance=ExtResource("2_0781p")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,7 +69,7 @@ GameModeDescription = "You have [b]two minutes[/b] to rack up as much score as y
 GameModeIcon = ExtResource("4_uwg66")
 GameModeScene = ExtResource("7_ecsm2")
 
-[node name="game_mode_button3" parent="." instance=ExtResource("2_0781p")]
+[node name="game_mode_button3" parent="." unique_id=172568190 instance=ExtResource("2_0781p")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -86,7 +88,7 @@ GameModeDescription = "Embark on a longer journey, where the more lines you clea
 GameModeIcon = ExtResource("5_c7qy8")
 GameModeScene = ExtResource("9_nq5ll")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1289485417]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

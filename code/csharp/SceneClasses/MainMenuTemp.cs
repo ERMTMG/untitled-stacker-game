@@ -9,6 +9,8 @@ namespace USG;
 public partial class MainMenuTemp : Control, ISceneDataEmitter
 {
 	[Export] private GC.Array<GameModeButton> buttons;
+	private PackedScene targetScene;
+	[Export] private PackedScene SettingsScene;
 	
 	private static Action GetButtonSpecificEventHandler(Action<GameModeButton> genericEventHandler, GameModeButton button)
 	{
@@ -20,8 +22,9 @@ public partial class MainMenuTemp : Control, ISceneDataEmitter
 		PackedScene scene = button.GameModeScene;
 		if(scene is not null)
 		{
+			targetScene = scene;
 			GetTree().CreateTimer(0.25).Timeout += () => {
-				SceneManager.Instance.SwitchScene(scene, transitionKind: SceneTransitionScreen.TransitionKind.WipeToRight);
+				SceneManager.Instance.SwitchScene(SettingsScene, transitionKind: SceneTransitionScreen.TransitionKind.WipeToRight);
 			};
 			foreach(GameModeButton otherButton in buttons)
 			{
@@ -41,6 +44,6 @@ public partial class MainMenuTemp : Control, ISceneDataEmitter
 
 	public SceneData GetData()
 	{
-		return new TestMessageSceneData("Hello World!");
+		return new GamemodeSettingsSceneData(targetScene);
 	}
 }

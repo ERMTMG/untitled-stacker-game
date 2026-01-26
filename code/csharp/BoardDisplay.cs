@@ -156,6 +156,13 @@ public partial class BoardDisplay : CanvasGroup
 		perfectClearPopup.Hide();
 	}
 
+	public void SetSettings(BoardSettings settings)
+	{
+		this.boardSettings = settings;
+		board.Settings = settings;
+		SetUpBoardElementPositions();
+	}
+	
 	public void StartGameCountdown()
 	{
 		board.SetPause(GameBoard.PauseMode.AllPaused);

@@ -42,8 +42,8 @@ public partial class GameScene40Lines : GameScene, ISceneDataReceiver
 		if(data is TestMessageSceneData messageData)
 		{
 			GD.Print(messageData.Message);
-		} else {
-			GD.PushWarning($"Scene data type {data.GetType()} not supported");
+		} else if(data is GamemodeSettingsSceneData settingsData) {
+			this.board.SetSettings(settingsData.Settings);
 		}
 	}
 }

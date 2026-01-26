@@ -57,7 +57,8 @@ texture = ExtResource("3_3xsyx")
 
 [node name="titleBar" parent="." instance=ExtResource("4_lfjc7")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 400.0
-offset_bottom = 60.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 424.0
+offset_bottom = 138.0
+scale = Vector2(1.2, 1.2)

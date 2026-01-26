@@ -1,11 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://cofd7ta3py4m0"]
+[gd_scene format=3 uid="uid://cofd7ta3py4m0"]
 
 [ext_resource type="Texture2D" uid="uid://cik07c6t4p04b" path="res://assets/graphics/gui/backgrounds/background_neutral.png" id="1_hm4m4"]
 [ext_resource type="Script" uid="uid://bv7visyv8p80t" path="res://code/csharp/UI_Elements/OptionsMenuBackgroundGears.cs" id="2_lfjc7"]
 [ext_resource type="Texture2D" uid="uid://brjfoswcqf41u" path="res://assets/graphics/gui/backgrounds/bg_gear.png" id="3_3xsyx"]
 [ext_resource type="PackedScene" uid="uid://banrmjs53auek" path="res://scenes/ui/menu_title.tscn" id="4_lfjc7"]
+[ext_resource type="Texture2D" uid="uid://bqwrimi0eaf5v" path="res://assets/graphics/gui/frames/window_big.png" id="5_k61yy"]
+[ext_resource type="FontFile" uid="uid://bvsayi5u23m3t" path="res://assets/fonts/Gelline.otf" id="6_7txom"]
+[ext_resource type="PackedScene" uid="uid://n3fqi6nwceky" path="res://scenes/ui/normal_button.tscn" id="7_binsn"]
 
-[node name="Control" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_2f1bn"]
+font = ExtResource("6_7txom")
+font_size = 23
+
+[sub_resource type="LabelSettings" id="LabelSettings_k61yy"]
+font_size = 64
+
+[node name="Control" type="Control" unique_id=826914512]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="background" type="TextureRect" parent="."]
+[node name="background" type="TextureRect" parent="." unique_id=381398650]
 modulate = Color(1.5, 1.5, 1.5, 1)
 layout_mode = 0
 offset_left = -757.0
@@ -24,7 +34,7 @@ rotation = -0.839301
 scale = Vector2(1.8082, 1.8082)
 texture = ExtResource("1_hm4m4")
 
-[node name="gears" type="Control" parent="." node_paths=PackedStringArray("gear1", "gear2")]
+[node name="gears" type="Control" parent="." unique_id=1162180635 node_paths=PackedStringArray("gear1", "gear2")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -33,7 +43,7 @@ gear1 = NodePath("gear1")
 gear2 = NodePath("gear2")
 RotationSpeed = 0.15
 
-[node name="gear1" type="TextureRect" parent="gears"]
+[node name="gear1" type="TextureRect" parent="gears" unique_id=864146504]
 modulate = Color(1, 1, 1, 0.270588)
 layout_mode = 0
 offset_left = 163.0
@@ -44,7 +54,7 @@ rotation = -6.28319
 pivot_offset = Vector2(404, 395)
 texture = ExtResource("3_3xsyx")
 
-[node name="gear2" type="TextureRect" parent="gears"]
+[node name="gear2" type="TextureRect" parent="gears" unique_id=599412696]
 modulate = Color(1, 1, 1, 0.176471)
 layout_mode = 0
 offset_left = 485.0
@@ -55,10 +65,160 @@ rotation = -5.82416
 pivot_offset = Vector2(404, 395)
 texture = ExtResource("3_3xsyx")
 
-[node name="titleBar" parent="." instance=ExtResource("4_lfjc7")]
+[node name="titleBar" parent="." unique_id=193872425 instance=ExtResource("4_lfjc7")]
+z_index = 1
 layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 424.0
-offset_bottom = 138.0
+offset_left = 65.0
+offset_top = 63.0
+offset_right = 465.0
+offset_bottom = 177.0
 scale = Vector2(1.2, 1.2)
+
+[node name="optionsFrame" type="TextureRect" parent="." unique_id=1328217721]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 164.00003
+offset_right = 545.0
+offset_bottom = 509.0
+texture = ExtResource("5_k61yy")
+expand_mode = 1
+
+[node name="options" type="Control" parent="optionsFrame" unique_id=521846795]
+anchors_preset = 0
+offset_left = 114.0
+offset_top = 39.99997
+offset_right = 394.0
+offset_bottom = 241.99997
+
+[node name="GridContainer" type="GridContainer" parent="optionsFrame/options" unique_id=534407641]
+layout_mode = 1
+offset_left = -23.0
+offset_top = 3.0
+offset_right = 287.0
+offset_bottom = 174.0
+columns = 3
+
+[node name="boardWidthLabel" type="Label" parent="optionsFrame/options/GridContainer" unique_id=419789956]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Board Width"
+label_settings = SubResource("LabelSettings_2f1bn")
+
+[node name="Control" type="Control" parent="optionsFrame/options/GridContainer" unique_id=1426329732]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="boardWidthOption" type="SpinBox" parent="optionsFrame/options/GridContainer" unique_id=2132647093]
+layout_mode = 2
+min_value = 4.0
+max_value = 20.0
+value = 10.0
+rounded = true
+custom_arrow_step = 1.0
+
+[node name="boardHeightLabel" type="Label" parent="optionsFrame/options/GridContainer" unique_id=993795084]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Board Height"
+label_settings = SubResource("LabelSettings_2f1bn")
+
+[node name="Control2" type="Control" parent="optionsFrame/options/GridContainer" unique_id=401027672]
+layout_mode = 2
+
+[node name="boardHeightOption" type="SpinBox" parent="optionsFrame/options/GridContainer" unique_id=1389895955]
+layout_mode = 2
+min_value = 1.0
+max_value = 40.0
+value = 20.0
+rounded = true
+custom_arrow_step = 1.0
+
+[node name="generatorLabel" type="Label" parent="optionsFrame/options/GridContainer" unique_id=548768202]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Generator"
+label_settings = SubResource("LabelSettings_2f1bn")
+
+[node name="Control3" type="Control" parent="optionsFrame/options/GridContainer" unique_id=630369356]
+layout_mode = 2
+
+[node name="generatorOption" type="OptionButton" parent="optionsFrame/options/GridContainer" unique_id=1064840875]
+layout_mode = 2
+size_flags_vertical = 3
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Bag generator"
+popup/item_0/id = 0
+popup/item_1/text = "Bag + X generator"
+popup/item_1/id = 1
+popup/item_2/text = "More generators coming soon..."
+popup/item_2/id = 2
+popup/item_2/disabled = true
+popup/item_2/separator = true
+
+[node name="pieceSetLabel" type="Label" parent="optionsFrame/options/GridContainer" unique_id=490310039]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Piece Set"
+label_settings = SubResource("LabelSettings_2f1bn")
+
+[node name="Control4" type="Control" parent="optionsFrame/options/GridContainer" unique_id=1825820570]
+layout_mode = 2
+
+[node name="pieceSetOption" type="OptionButton" parent="optionsFrame/options/GridContainer" unique_id=1772269849]
+layout_mode = 2
+size_flags_vertical = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "Tetrominos"
+popup/item_0/id = 0
+popup/item_1/text = "Pentominos"
+popup/item_1/id = 1
+popup/item_2/text = "Tetro + Pentominos"
+popup/item_2/id = 2
+popup/item_3/text = "All up to Pentominos"
+popup/item_3/id = 3
+
+[node name="kickTableLabel" type="Label" parent="optionsFrame/options/GridContainer" unique_id=1913211460]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Kick Table"
+label_settings = SubResource("LabelSettings_2f1bn")
+
+[node name="Control5" type="Control" parent="optionsFrame/options/GridContainer" unique_id=1831361611]
+layout_mode = 2
+
+[node name="kickTableOption" type="OptionButton" parent="optionsFrame/options/GridContainer" unique_id=1361142309]
+layout_mode = 2
+size_flags_vertical = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "SRS Kicks"
+popup/item_0/id = 0
+popup/item_1/text = "Techmino Kicks"
+popup/item_1/id = 1
+popup/item_2/text = "ASC Kicks"
+popup/item_2/id = 2
+popup/item_3/text = "No Kicks"
+popup/item_3/id = 3
+
+[node name="GoButton" parent="." unique_id=426118579 instance=ExtResource("7_binsn")]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 417.0
+offset_right = 396.0
+offset_bottom = 477.0
+buttonText = "GO!"
+
+[node name="Label" type="Label" parent="." unique_id=1723917955]
+layout_mode = 0
+offset_left = 710.00006
+offset_top = 211.00002
+offset_right = 1066.0
+offset_bottom = 390.0
+rotation = 0.4984339
+text = "idk what to
+put here lol"
+label_settings = SubResource("LabelSettings_k61yy")
+horizontal_alignment = 1

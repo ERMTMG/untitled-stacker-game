@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://t8c6y583o1ee"]
+[gd_scene format=3 uid="uid://t8c6y583o1ee"]
 
 [ext_resource type="PackedScene" uid="uid://db4iof4u878yt" path="res://scenes/game.tscn" id="1_d6wwj"]
 [ext_resource type="Script" uid="uid://44fyvrr3c043" path="res://code/csharp/SceneClasses/GameScene40Lines.cs" id="2_twevw"]
@@ -9,7 +9,6 @@
 [sub_resource type="Resource" id="Resource_o5vu5"]
 script = ExtResource("5_7tvig")
 DasSeconds = 0.12
-ArrSeconds = 0.0
 SoftDropFactor = 40
 Generator = ExtResource("4_m7xhf")
 BoardWidth = 10
@@ -18,14 +17,9 @@ OverBoardHeight = 20
 BeginningGravityLevel = 0.017
 LockDelaySeconds = 0.5
 TopOutTypesConsidered = 3
-LineClearAreSeconds = 0.0
-LevellingEnabled = false
-LinesRequiredToLevelUp = 0
-AbsoluteMadness = false
-SetKickTable = 0
 metadata/_custom_type_script = "uid://cc47ivv4r3u7a"
 
-[node name="match" instance=ExtResource("1_d6wwj")]
+[node name="match" unique_id=1365126163 instance=ExtResource("1_d6wwj")]
 script = ExtResource("2_twevw")
 targetLines = 40
 

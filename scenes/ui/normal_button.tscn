@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://n3fqi6nwceky"]
+
+[ext_resource type="Script" uid="uid://3310k0cpvxv1" path="res://code/csharp/UI_Elements/NormalButton.cs" id="1_jnrhg"]
+[ext_resource type="Texture2D" uid="uid://qintod4if0ag" path="res://assets/graphics/gui/interactables/button_big_non_transparent.png" id="3_h4bv2"]
+[ext_resource type="FontFile" uid="uid://d0silwi1ecc65" path="res://assets/fonts/BOLDEAN.ttf" id="4_r3b03"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dbenc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ykc8e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jw77r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thc5v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bphx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ny1tq"]
+font = ExtResource("4_r3b03")
+font_size = 42
+
+[node name="Button" type="Button" unique_id=426118579 node_paths=PackedStringArray("textLabel", "buttonSprite")]
+offset_right = 231.0
+offset_bottom = 60.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dbenc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ykc8e")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jw77r")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_thc5v")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4bphx")
+flat = true
+script = ExtResource("1_jnrhg")
+textLabel = NodePath("Label")
+buttonSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=696255265]
+texture = ExtResource("3_h4bv2")
+centered = false
+
+[node name="Label" type="Label" parent="." unique_id=1674353928]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "TEXT"
+label_settings = SubResource("LabelSettings_ny1tq")
+horizontal_alignment = 1
+vertical_alignment = 1

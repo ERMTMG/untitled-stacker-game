@@ -13,7 +13,7 @@ uniform float Brightness : hint_range(0.0, 10.0) = 3.0;
 uniform float Distortion : hint_range(1.0, 3.0) = 2;
 uniform float LensStrength : hint_range(0.0, 0.1) = 0.05;
 
-uniform float time : hint_range(0.0, 0.5, 0);
+uniform float time : hint_range(0.0, 0.5, 0.01);
 
 void fragment() {
     vec2 uv = UV;
